@@ -2,6 +2,7 @@ package com.ByteBazaar.ByteBazaarBackend.repository;
 
 import com.ByteBazaar.ByteBazaarBackend.entity.UserEntity;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.springframework.stereotype.Repository;
 
 @Repository
