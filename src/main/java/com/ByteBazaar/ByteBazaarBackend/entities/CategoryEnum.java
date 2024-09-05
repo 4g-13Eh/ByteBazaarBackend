@@ -1,5 +1,8 @@
 package com.ByteBazaar.ByteBazaarBackend.entities;
 
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "categories")
 public enum CategoryEnum {
     AUDIO("Audio"),
     BUERO("Büro"),
