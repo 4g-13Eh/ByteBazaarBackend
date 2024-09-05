@@ -1,4 +1,4 @@
-package com.ByteBazaar.ByteBazaarBackend.entities;
+package com.ByteBazaar.ByteBazaarBackend.entity;
 
 import org.springframework.data.mongodb.core.mapping.Document;
 

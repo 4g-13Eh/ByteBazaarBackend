@@ -1,4 +1,4 @@
-package com.ByteBazaar.ByteBazaarBackend.entities;
+package com.ByteBazaar.ByteBazaarBackend.entity;
 
 public class ShoppingCartItemEntity {
     public ItemEntity cartItem;
