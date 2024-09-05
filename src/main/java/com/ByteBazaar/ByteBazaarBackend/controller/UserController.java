@@ -17,8 +17,9 @@ public class UserController {
     }
 
     @PostMapping("api/users/register")
-    String createUser(@RequestBody String user){
-        return "Created User with Id: " + user;
+    String createUser(@RequestBody UserEntity user){
+        UserEntity createdUser = userService.createUser(user);
+        return "Created User with Id: " + createdUser.getUserId();
     }
 
 
