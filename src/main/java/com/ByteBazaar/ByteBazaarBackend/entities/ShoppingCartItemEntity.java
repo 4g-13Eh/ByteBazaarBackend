@@ -1,8 +1,6 @@
 package com.ByteBazaar.ByteBazaarBackend.entities;
 
-import java.util.List;
-
-public class ShoppingCartItem {
+public class ShoppingCartItemEntity {
     public ItemEntity cartItem;
     public Integer quantity;
 

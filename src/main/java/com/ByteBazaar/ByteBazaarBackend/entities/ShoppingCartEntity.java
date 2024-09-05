@@ -7,7 +7,7 @@ import java.util.List;
 public class ShoppingCartEntity {
     @Id
     public String cartId;
-    public List<ShoppingCartItem> cartItems;
+    public List<ShoppingCartItemEntity> cartItems;
 
     public String getCartId() {
         return cartId;
@@ -16,10 +16,10 @@ public class ShoppingCartEntity {
         this.cartId = cartId;
     }
 
-    public List<ShoppingCartItem> getItems() {
+    public List<ShoppingCartItemEntity> getItems() {
         return cartItems;
     }
-    public void setItems(List<ShoppingCartItem> cartItems) {
+    public void setItems(List<ShoppingCartItemEntity> cartItems) {
         this.cartItems = cartItems;
     }
 }
