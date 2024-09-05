@@ -6,10 +6,12 @@ import com.ByteBazaar.ByteBazaarBackend.exception.ItemNotFoundException;
 import com.ByteBazaar.ByteBazaarBackend.repository.ItemRepository;
 import com.ByteBazaar.ByteBazaarBackend.serivce.ItemService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
+@Service
 public class ItemServiceImpl implements ItemService {
 
     @Autowired

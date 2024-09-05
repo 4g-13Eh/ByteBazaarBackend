@@ -6,10 +6,12 @@ import com.ByteBazaar.ByteBazaarBackend.exception.ShoppingCartNotFoundException;
 import com.ByteBazaar.ByteBazaarBackend.repository.ShoppingCartRepository;
 import com.ByteBazaar.ByteBazaarBackend.serivce.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.UUID;
 
+@Service
 public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Autowired
