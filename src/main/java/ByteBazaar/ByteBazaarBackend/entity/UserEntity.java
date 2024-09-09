@@ -1,5 +1,6 @@
 package ByteBazaar.ByteBazaarBackend.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -14,8 +15,12 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class UserEntity {
     @Id
+    @Column(name = "Id")
     private String userId;
+    @Column(name = "email")
     private String email;
+    @Column(name = "password")
     private String passwordHash;
+    @Column(name = "cartId")
     private String cartId;
 }
