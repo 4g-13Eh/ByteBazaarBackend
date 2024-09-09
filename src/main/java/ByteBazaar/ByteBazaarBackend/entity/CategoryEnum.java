@@ -1,27 +1,35 @@
 package ByteBazaar.ByteBazaarBackend.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "categories")
 public enum CategoryEnum {
-    AUDIO("Audio"),
-    BUERO("Büro"),
-    DROHNEN("Drohnen"),
-    FOTO("Foto"),
-    VIDEO("Video"),
-    GAMING("Gaming"),
-    NETZWERK("Netzwerk"),
-    NOTEBOOKS("Notebooks"),
-    TV("TV"),
-    PC("PC"),
-    HANDYS("Handys");
+    AUDIO(1, "Audio"),
+    BUERO(2, "Büro"),
+    DROHNEN(3, "Drohnen"),
+    FOTO(4, "Foto"),
+    VIDEO(5, "Video"),
+    GAMING(6, "Gaming"),
+    NETZWERK(7, "Netzwerk"),
+    NOTEBOOKS(8, "Notebooks"),
+    TV(9, "TV"),
+    PC(10, "PC"),
+    HANDYS(11, "Handys");
 
+    @Id
+    private final Integer id;
     private final String displayName;
 
-    CategoryEnum(String displayName){
+    CategoryEnum(Integer id, String displayName){
+        this.id = id;
         this.displayName = displayName;
+    }
+
+    public Integer getId(){
+        return id;
     }
 
     public String getDisplayName(){
