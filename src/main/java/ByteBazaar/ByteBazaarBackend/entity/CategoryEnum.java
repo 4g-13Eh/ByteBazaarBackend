@@ -23,6 +23,7 @@ public enum CategoryEnum {
     @Id
     @Column(name = "Id")
     private final Integer id;
+    @Column(name = "category")
     private final String displayName;
 
     CategoryEnum(Integer id, String displayName){
