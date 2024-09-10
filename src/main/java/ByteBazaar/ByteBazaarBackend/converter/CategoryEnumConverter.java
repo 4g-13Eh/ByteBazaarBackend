@@ -1,6 +1,6 @@
 package ByteBazaar.ByteBazaarBackend.converter;
 
-import ByteBazaar.ByteBazaarBackend.entity.CategoryEnum;
+import ByteBazaar.ByteBazaarBackend.enumeration.CategoryEnum;
 import jakarta.persistence.AttributeConverter;
 
 public class CategoryEnumConverter implements AttributeConverter<CategoryEnum, Integer> {

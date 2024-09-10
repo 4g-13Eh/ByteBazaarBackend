@@ -1,6 +1,5 @@
 package ByteBazaar.ByteBazaarBackend.entity;
 
-import ByteBazaar.ByteBazaarBackend.converter.CategoryEnumConverter;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -37,12 +36,11 @@ public class ItemEntity {
     public Integer stock_num;
 
     @Enumerated(EnumType.STRING)
-    @Convert(converter = CategoryEnumConverter.class)
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(
             name = "item_category",
-            joinColumns = @JoinColumn(name = "item_id"),
-            inverseJoinColumns = @JoinColumn(name = "category_id")
+            joinColumns = @JoinColumn(name = "itemId"),
+            inverseJoinColumns = @JoinColumn(name = "categoryId")
     )
-    public List<CategoryEnum> categories;
+    public List<CategoryEntity> categories;
 }

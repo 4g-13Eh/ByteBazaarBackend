@@ -1,12 +1,5 @@
-package ByteBazaar.ByteBazaarBackend.entity;
+package ByteBazaar.ByteBazaarBackend.enumeration;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
-
-@Entity
-@Table(name = "categories")
 public enum CategoryEnum {
     AUDIO(1, "Audio"),
     BUERO(2, "Büro"),
@@ -20,10 +13,7 @@ public enum CategoryEnum {
     PC(10, "PC"),
     HANDYS(11, "Handys");
 
-    @Id
-    @Column(name = "Id")
     private final Integer id;
-    @Column(name = "category")
     private final String displayName;
 
     CategoryEnum(Integer id, String displayName){
