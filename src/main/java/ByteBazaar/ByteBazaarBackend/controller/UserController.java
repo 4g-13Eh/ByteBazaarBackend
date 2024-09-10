@@ -1,10 +1,12 @@
 package ByteBazaar.ByteBazaarBackend.controller;
 
-import ByteBazaar.ByteBazaarBackend.dto.GetUserDto;
+import ByteBazaar.ByteBazaarBackend.dto.UserDto;
 import ByteBazaar.ByteBazaarBackend.entity.UserEntity;
 import ByteBazaar.ByteBazaarBackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("api/users")
@@ -13,18 +15,28 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @GetMapping
+    List<UserEntity> getAllUsers(){
+        return userService.getAllUsers();
+    }
+
     @GetMapping("/{userId}")
-    GetUserDto getUserById(@PathVariable("userId") String userId){
+    UserEntity getUserById(@PathVariable("userId") String userId){
         return userService.getUserById(userId);
     }
 
-    @PostMapping
-    UserEntity registerUser(@RequestBody UserEntity user){
-        return userService.createUser(user);
+    @PostMapping("/register")
+    UserEntity registerUser(@RequestBody UserDto user){
+        return userService.createUser(user.getEmail(), user.getPassword());
+    }
+
+    @PostMapping("/login")
+    Boolean loginUser(@RequestBody UserDto user){
+        return userService.loginUser(user.getEmail(), user.getPassword());
     }
 
     @PutMapping("/{userId}")
-    GetUserDto assignCartToUser(@PathVariable("userId") String userId, String cartId){
+    UserEntity assignCartToUser(@PathVariable("userId") String userId, String cartId){
         return userService.assignCartToUser(userId, cartId);
     }
 }

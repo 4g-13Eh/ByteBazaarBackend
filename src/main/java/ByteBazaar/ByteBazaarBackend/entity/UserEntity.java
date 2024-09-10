@@ -7,6 +7,7 @@ import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UuidGenerator;
 
 @Entity
 @Table(name = "users")
@@ -16,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class UserEntity {
     @Id
     @Column(name = "Id")
+    @UuidGenerator
     private String userId;
     @Column(name = "email")
     private String email;
