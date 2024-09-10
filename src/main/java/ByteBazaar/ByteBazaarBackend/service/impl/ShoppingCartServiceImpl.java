@@ -18,8 +18,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private ShoppingCartRepository shoppingCartRepository;
 
     @Override
-    public ShoppingCartEntity createCart(ShoppingCartEntity cart) {
-        cart.setCartId(UUID.randomUUID().toString());
+    public ShoppingCartEntity createCart() {
+        ShoppingCartEntity cart = new ShoppingCartEntity();
         return shoppingCartRepository.save(cart);
     }
 

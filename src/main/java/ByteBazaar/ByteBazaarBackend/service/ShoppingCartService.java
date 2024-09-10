@@ -6,7 +6,7 @@ import ByteBazaar.ByteBazaarBackend.entity.ShoppingCartItemEntity;
 import java.util.List;
 
 public interface ShoppingCartService {
-    ShoppingCartEntity createCart(ShoppingCartEntity cart);
+    ShoppingCartEntity createCart();
     ShoppingCartEntity getCartById(String cartId);
     List<ShoppingCartItemEntity> getCartItems(String cartId);
     void addItemToCart(String cartId, List<ShoppingCartItemEntity> item);
