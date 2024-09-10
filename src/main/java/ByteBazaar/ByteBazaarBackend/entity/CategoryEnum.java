@@ -1,5 +1,6 @@
 package ByteBazaar.ByteBazaarBackend.entity;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
@@ -20,6 +21,7 @@ public enum CategoryEnum {
     HANDYS(11, "Handys");
 
     @Id
+    @Column(name = "Id")
     private final Integer id;
     private final String displayName;
 
