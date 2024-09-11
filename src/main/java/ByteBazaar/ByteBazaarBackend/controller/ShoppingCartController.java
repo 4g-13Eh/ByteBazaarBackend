@@ -2,6 +2,7 @@ package ByteBazaar.ByteBazaarBackend.controller;
 
 import ByteBazaar.ByteBazaarBackend.dto.AddItemRequestDto;
 import ByteBazaar.ByteBazaarBackend.entity.ShoppingCartEntity;
+import ByteBazaar.ByteBazaarBackend.entity.ShoppingCartItemEntity;
 import ByteBazaar.ByteBazaarBackend.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,23 +16,33 @@ public class ShoppingCartController {
     @Autowired
     private ShoppingCartService shoppingCartService;
 
-    @PostMapping("/create")
+    @PostMapping
     public ShoppingCartEntity createShoppingCart(){
         return shoppingCartService.createCart();
     }
 
-    @PutMapping("/add/{cartId}")
-    public void add(@PathVariable("cartId") String cartId, @RequestBody AddItemRequestDto addItemRequestDto){
+    @GetMapping("/{cartId}")
+    public List<ShoppingCartItemEntity> getCartItems(@PathVariable("cartId") String cartId){
+        return shoppingCartService.getCartItems(cartId);
+    }
+
+    @PutMapping("/{cartId}")
+    public void addItem(@PathVariable("cartId") String cartId, @RequestBody AddItemRequestDto addItemRequestDto){
         shoppingCartService.addItemToCart(cartId, addItemRequestDto.getItemId());
     }
 
-    @DeleteMapping("/clear/{cartId}")
-    public void clear(@PathVariable("cartId") String cartId){
+    @DeleteMapping("/{cartId}")
+    public void clearCart(@PathVariable("cartId") String cartId){
         shoppingCartService.clearCart(cartId);
     }
 
+    @DeleteMapping("/{cartId}/{itemId}")
+    public void removeItem(@PathVariable("cartId") String cartId, @PathVariable("itemId") String itemId){
+        shoppingCartService.removeItemFromCart(cartId, itemId);
+    }
+
     @GetMapping("/quantity/{cartId}")
-    public Integer quant(@PathVariable("cartId") String cartId){
+    public Integer getCartCount(@PathVariable("cartId") String cartId){
         return shoppingCartService.getTotalQuantityForCart(cartId);
     }
 }

@@ -65,15 +65,23 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             newCartItem.setQuantity(1);
             cart.getCartItems().add(newCartItem);
         }
-        System.out.println("Items in cart before saving: "+cart.getCartItems().size());
         shoppingCartRepository.save(cart);
     }
 
     @Override
     public void removeItemFromCart(String cartId, String cartItemId){
         ShoppingCartEntity cart = getCartById(cartId);
-        cart.getCartItems().removeIf(item -> item.getCartItem().getItemId().equals(cartItemId));
-        shoppingCartRepository.save(cart);
+
+        Optional<ShoppingCartItemEntity> itemToRemoveOpt = cart.getCartItems().stream()
+                .filter(cartItem -> cartItem.getCartItem().getItemId().equals(cartItemId))
+                .findFirst();
+
+        if (itemToRemoveOpt.isPresent()){
+            ShoppingCartItemEntity itemToRemove = itemToRemoveOpt.get();
+            cart.getCartItems().remove(itemToRemove);
+            cartItemRepository.delete(itemToRemove);
+            shoppingCartRepository.save(cart);
+        }
     }
 
     @Override
