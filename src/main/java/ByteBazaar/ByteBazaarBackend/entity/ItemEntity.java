@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.List;
 
@@ -15,25 +16,26 @@ import java.util.List;
 public class ItemEntity {
     @Id
     @Column(name = "Id")
-    public String itemId;
+    @UuidGenerator
+    private String itemId;
 
     @Column(name = "name")
-    public String name;
+    private String name;
 
     @Column(name = "description")
-    public String description;
+    private String description;
 
     @Column(name = "picture")
-    public String picture;
+    private String picture;
 
     @Column(name = "price")
-    public Float price;
+    private Float price;
 
     @Column(name = "in_stock")
-    public Boolean in_stock;
+    private Boolean in_stock;
 
     @Column(name = "stock_num")
-    public Integer stock_num;
+    private Integer stock_num;
 
     @Enumerated(EnumType.STRING)
     @ManyToMany(fetch = FetchType.EAGER)
@@ -42,5 +44,5 @@ public class ItemEntity {
             joinColumns = @JoinColumn(name = "itemId"),
             inverseJoinColumns = @JoinColumn(name = "categoryId")
     )
-    public List<CategoryEntity> categories;
+    private List<CategoryEntity> categories;
 }

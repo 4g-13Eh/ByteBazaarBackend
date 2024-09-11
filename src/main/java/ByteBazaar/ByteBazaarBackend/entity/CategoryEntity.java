@@ -16,8 +16,8 @@ import lombok.NoArgsConstructor;
 public class CategoryEntity {
     @Id
     @Column(name = "Id")
-    public Integer id;
+    private Integer id;
 
     @Column(name = "category")
-    public String categoryName;
+    private String categoryName;
 }

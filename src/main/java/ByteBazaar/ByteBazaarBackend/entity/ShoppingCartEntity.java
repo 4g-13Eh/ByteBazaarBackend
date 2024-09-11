@@ -6,10 +6,11 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.UuidGenerator;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "shoppingcarts")
+@Table(name = "carts")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -17,9 +18,8 @@ public class ShoppingCartEntity {
     @Id
     @Column(name = "Id")
     @UuidGenerator
-    public String cartId;
+    private String cartId;
 
-    @ElementCollection
-    @CollectionTable(name = "cart_items", joinColumns = @JoinColumn(name = "cart_id"))
-    public List<ShoppingCartItemEntity> cartItems;
+    @OneToMany(mappedBy = "cart", cascade = CascadeType.ALL)
+    private List<ShoppingCartItemEntity> cartItems = new ArrayList<>();
 }
