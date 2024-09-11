@@ -1,10 +1,12 @@
 package ByteBazaar.ByteBazaarBackend.service.impl;
 
+import ByteBazaar.ByteBazaarBackend.entity.ShoppingCartEntity;
 import ByteBazaar.ByteBazaarBackend.entity.UserEntity;
 import ByteBazaar.ByteBazaarBackend.exception.InvalidEmailOrPasswordException;
 import ByteBazaar.ByteBazaarBackend.exception.UserAlreadyExistsException;
 import ByteBazaar.ByteBazaarBackend.exception.UserNotFoundException;
 import ByteBazaar.ByteBazaarBackend.repository.UserRepository;
+import ByteBazaar.ByteBazaarBackend.service.ShoppingCartService;
 import ByteBazaar.ByteBazaarBackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -14,8 +16,12 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
     @Autowired
     private UserRepository userRepository;
+
+    @Autowired
+    private ShoppingCartService shoppingCartService;
 
     @Override
     public UserEntity createUser(String email, String passwordHash){
@@ -25,9 +31,10 @@ public class UserServiceImpl implements UserService {
             throw new UserAlreadyExistsException();
         }
         UserEntity user = new UserEntity();
+        ShoppingCartEntity cart = shoppingCartService.createCart();
         user.setEmail(email);
         user.setPasswordHash(passwordHash);
-        user.setCartId(null);
+        user.setCartId(cart.getCartId());
         return userRepository.save(user);
     }
 

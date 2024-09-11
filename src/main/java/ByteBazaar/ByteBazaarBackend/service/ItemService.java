@@ -1,6 +1,5 @@
 package ByteBazaar.ByteBazaarBackend.service;
 
-import ByteBazaar.ByteBazaarBackend.entity.CategoryEntity;
 import ByteBazaar.ByteBazaarBackend.entity.ItemEntity;
 
 import java.util.List;
