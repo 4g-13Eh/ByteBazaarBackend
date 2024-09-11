@@ -1,5 +1,6 @@
 package ByteBazaar.ByteBazaarBackend.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -19,6 +20,7 @@ public class ShoppingCartItemEntity {
 
     @ManyToOne
     @JoinColumn(name = "cartId", referencedColumnName = "Id")
+    @JsonIgnore // https://stackoverflow.com/a/67766027
     private ShoppingCartEntity cart;
 
     @ManyToOne
