@@ -25,6 +25,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Autowired
     private ItemService itemService;
+    private Optional<ShoppingCartItemEntity> itemToRemoveOpt;
 
     @Override
     public ShoppingCartEntity createCart() {
@@ -92,5 +93,25 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public Integer getTotalQuantityForCart(String cartId){
         return cartItemRepository.getTotalQuantityByCartId(cartId);
+    }
+
+    @Override
+    public void updateItemQuantity(String cartId, String itemId, Integer newQuantity){
+        ShoppingCartEntity cart = getCartById(cartId);
+        ItemEntity item = itemService.getItemById(itemId);
+
+        Optional<ShoppingCartItemEntity> itemToUpdateOpt = cart.getCartItems().stream()
+                .filter(cartItem -> cartItem.getCartItem().getItemId().equals(item.getItemId()))
+                .findFirst();
+
+        if (itemToUpdateOpt.isPresent()){
+            ShoppingCartItemEntity itemToUpdate = itemToUpdateOpt.get();
+            if (newQuantity >= 0 && newQuantity <= itemToUpdate.getCartItem().getStock_num()){
+                itemToUpdate.setQuantity(newQuantity);
+            } else {
+                itemToUpdate.setQuantity(1);
+            }
+        }
+        shoppingCartRepository.save(cart);
     }
 }

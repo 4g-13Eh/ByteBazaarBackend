@@ -45,4 +45,13 @@ public class ShoppingCartController {
     public Integer getCartCount(@PathVariable("cartId") String cartId){
         return shoppingCartService.getTotalQuantityForCart(cartId);
     }
+
+    @PutMapping("/quantity/{cartId}/{itemId}")
+    public void updateItemQuantity(
+            @PathVariable("cartId") String cartId,
+            @PathVariable("itemId") String itemId,
+            @RequestBody  Integer newQuantity
+    ){
+        shoppingCartService.updateItemQuantity(cartId, itemId, newQuantity);
+    }
 }

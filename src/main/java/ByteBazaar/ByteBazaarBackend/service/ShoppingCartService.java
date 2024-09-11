@@ -13,7 +13,7 @@ public interface ShoppingCartService {
     void removeItemFromCart(String cartId, String cartItemId);
     void clearCart(String cartId);
     Integer getTotalQuantityForCart(String cartId);
+    void updateItemQuantity(String cartId, String itemId, Integer newQuantity);
 
 //    void updateCartItemCount(String cartId);
-//    void updateItemQuantity(String cartId, String itemId, Integer newQuantity);
 }
