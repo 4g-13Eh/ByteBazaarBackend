@@ -19,11 +19,13 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     @Autowired
     private UserService userService;
 
+    @Autowired
     private UserRepository userRepository;
 
     @Autowired
     private JwtService jwtService;
 
+    @Autowired
     private AuthenticationManager authenticationManager;
 
     @Override
