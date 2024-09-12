@@ -9,21 +9,27 @@ import ByteBazaar.ByteBazaarBackend.security.dto.SignUpDto;
 import ByteBazaar.ByteBazaarBackend.security.service.AuthenticationService;
 import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
 import ByteBazaar.ByteBazaarBackend.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AuthenticationServiceImpl implements AuthenticationService {
+    @Autowired
     private UserService userService;
+
     private UserRepository userRepository;
+
+    @Autowired
     private JwtService jwtService;
+
     private AuthenticationManager authenticationManager;
 
     @Override
     public JwtTokenDto signup(SignUpDto request) {
-        UserEntity user = this.userService.createUser(request.getEmail(), request.getPassword(), request.getConfirmedPassword());
-        String jwt = this.jwtService.generateToken(user);
+        UserEntity user = userService.createUser(request.getEmail(), request.getPassword(), request.getConfirmedPassword());
+        String jwt = jwtService.generateToken(user);
         return new JwtTokenDto(jwt);
     }
 
