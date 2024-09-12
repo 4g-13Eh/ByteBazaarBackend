@@ -1,6 +1,7 @@
 package ByteBazaar.ByteBazaarBackend.security.service.impl;
 
 import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
+import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -22,8 +23,8 @@ public class JwtServiceImpl implements JwtService {
     private String jwtSecret;
     private Long jwtValidityInMs;
 
-    private static final String SECRET_KEY =
-            "eyJhbGciOiJIUzI1NiJ9.ew0KICAic3ViIjogIjEyMzQ1Njc4OTAiLA0KICAibmFtZSI6ICJBbmlzaCBOYXRoIiwNCiAgImlhdCI6IDE1MTYyMzkwMjINCn0.PhXJJBySNQEt96MaEuC-YtVxXnftXjdzFsldA3yn31k";
+
+    private static final String SECRET_KEY = Dotenv.load().get("SECRET_KEY");
 
     @Override
     public String extractUsername(String token) {
@@ -56,7 +57,7 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUsername(token);
-        return (userName.equals((userDetails.getUsername()))) && !isTokenValid(token);
+        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
