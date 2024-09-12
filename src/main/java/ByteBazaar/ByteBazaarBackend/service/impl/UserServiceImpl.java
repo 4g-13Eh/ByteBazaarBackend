@@ -9,6 +9,7 @@ import ByteBazaar.ByteBazaarBackend.repository.UserRepository;
 import ByteBazaar.ByteBazaarBackend.service.ShoppingCartService;
 import ByteBazaar.ByteBazaarBackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,6 +17,7 @@ import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+    private PasswordEncoder passwordEncoder;
 
     @Autowired
     private UserRepository userRepository;
@@ -24,8 +26,11 @@ public class UserServiceImpl implements UserService {
     private ShoppingCartService shoppingCartService;
 
     @Override
-    public UserEntity createUser(String email, String passwordHash){
-        if (email == null || email.isBlank() || passwordHash == null || passwordHash.isBlank()){
+    public UserEntity createUser(String email, String passwordHash, String confirmedPassword){
+        if (email == null || email.isBlank() ||
+                passwordHash == null || passwordHash.isBlank() ||
+                confirmedPassword == null || confirmedPassword.isBlank() || !confirmedPassword.equals(passwordHash)
+        ){
             throw new InvalidEmailOrPasswordException();
         } else if (userRepository.findByEmail(email).isPresent()) {
             throw new UserAlreadyExistsException();
@@ -33,6 +38,7 @@ public class UserServiceImpl implements UserService {
         UserEntity user = new UserEntity();
         ShoppingCartEntity cart = shoppingCartService.createCart();
         user.setEmail(email);
+        passwordHash = passwordEncoder.encode(passwordHash);
         user.setPasswordHash(passwordHash);
         user.setCartId(cart.getCartId());
         return userRepository.save(user);
@@ -43,6 +49,7 @@ public class UserServiceImpl implements UserService {
         if (email == null || email.isBlank() || password == null || password.isBlank()){
             throw new InvalidEmailOrPasswordException();
         }
+        password = passwordEncoder.encode(password);
         Optional<UserEntity> usr = userRepository.findByEmail(email);
         if (!usr.get().getPasswordHash().equals(password)){
             throw new InvalidEmailOrPasswordException();
