@@ -20,10 +20,6 @@ import java.util.function.Function;
 @Service
 public class JwtServiceImpl implements JwtService {
 
-    private String jwtSecret;
-    private Long jwtValidityInMs;
-
-
     private static final String SECRET_KEY = Dotenv.load().get("SECRET_KEY");
 
     @Override
@@ -37,7 +33,7 @@ public class JwtServiceImpl implements JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + jwtValidityInMs))
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
