@@ -50,9 +50,8 @@ public class UserServiceImpl implements UserService {
         if (email == null || email.isBlank() || password == null || password.isBlank()){
             throw new InvalidEmailOrPasswordException();
         }
-        password = passwordEncoder.encode(password);
         Optional<UserEntity> usr = userRepository.findByEmail(email);
-        if (!usr.get().getPasswordHash().equals(password)){
+        if (usr.isEmpty() || !passwordEncoder.matches(password, usr.get().getPasswordHash())) {
             throw new InvalidEmailOrPasswordException();
         }
         return true;
