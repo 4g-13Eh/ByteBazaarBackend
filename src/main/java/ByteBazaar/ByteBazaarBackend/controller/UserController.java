@@ -1,6 +1,5 @@
 package ByteBazaar.ByteBazaarBackend.controller;
 
-import ByteBazaar.ByteBazaarBackend.dto.UserDto;
 import ByteBazaar.ByteBazaarBackend.entity.UserEntity;
 import ByteBazaar.ByteBazaarBackend.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,16 +22,6 @@ public class UserController {
     @GetMapping("/{userId}")
     UserEntity getUserById(@PathVariable("userId") String userId){
         return userService.getUserById(userId);
-    }
-
-    @PostMapping("/register")
-    UserEntity registerUser(@RequestBody UserDto user){
-        return userService.createUser(user.getEmail(), user.getPassword());
-    }
-
-    @PostMapping("/login")
-    Boolean loginUser(@RequestBody UserDto user){
-        return userService.loginUser(user.getEmail(), user.getPassword());
     }
 
     @PutMapping("/{userId}")
