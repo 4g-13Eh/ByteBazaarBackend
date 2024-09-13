@@ -4,7 +4,7 @@ import ByteBazaar.ByteBazaarBackend.security.dto.JwtTokenDto;
 import ByteBazaar.ByteBazaarBackend.security.dto.SignInDto;
 import ByteBazaar.ByteBazaarBackend.security.dto.SignUpDto;
 import ByteBazaar.ByteBazaarBackend.security.service.AuthenticationService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,10 +12,10 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("api/auth")
+@RequiredArgsConstructor
 public class AuthenticationController {
 
-    @Autowired
-    private AuthenticationService authenticationService;
+    private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
     JwtTokenDto signup(@RequestBody SignUpDto data){

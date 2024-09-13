@@ -27,27 +27,9 @@ public class JwtServiceImpl implements JwtService {
         return extractClaim(token, Claims::getSubject);
     }
 
-    public String generateToken(Map<String, Objects> extraClaims, UserDetails userDetails) {
-        return Jwts
-                .builder()
-                .setClaims(extraClaims)
-                .setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
-    }
-
     @Override
     public String generateToken(UserDetails userDetails){
         return generateToken(new HashMap<>(), userDetails);
-    }
-
-    private boolean isTokenExpired(String token){
-        return extractExpiration(token).before(new Date());
-    }
-
-    private Date extractExpiration(String token){
-        return extractClaim(token, Claims::getExpiration);
     }
 
     @Override
@@ -59,6 +41,24 @@ public class JwtServiceImpl implements JwtService {
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
+    }
+
+    public String generateToken(Map<String, Objects> extraClaims, UserDetails userDetails) {
+        return Jwts
+                .builder()
+                .setClaims(extraClaims)
+                .setSubject(userDetails.getUsername())
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setExpiration(new Date(System.currentTimeMillis() + 3600000))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
+    }
+
+    private boolean isTokenExpired(String token){
+        return extractExpiration(token).before(new Date());
+    }
+
+    private Date extractExpiration(String token){
+        return extractClaim(token, Claims::getExpiration);
     }
 
     private Claims extractAllClaims(String token){

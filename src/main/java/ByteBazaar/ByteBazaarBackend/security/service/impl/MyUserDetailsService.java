@@ -3,14 +3,16 @@ package ByteBazaar.ByteBazaarBackend.security.service.impl;
 import ByteBazaar.ByteBazaarBackend.entity.UserEntity;
 import ByteBazaar.ByteBazaarBackend.exception.UserNotFoundException;
 import ByteBazaar.ByteBazaarBackend.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 @Service
+@RequiredArgsConstructor
 public class MyUserDetailsService implements UserDetailsService {
 
-    private UserRepository userRepository;
+    private final UserRepository userRepository;
 
     @Override
     public UserDetails loadUserByUsername(String username) {
