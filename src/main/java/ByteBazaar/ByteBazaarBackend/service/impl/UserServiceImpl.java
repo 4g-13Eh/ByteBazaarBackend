@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Service
 @RequiredArgsConstructor
@@ -24,7 +26,10 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity createUser(String email, String passwordHash, String confirmedPassword){
-        if (email == null || email.isBlank() ||
+        String emailRegex = "^(?!.*\\.\\..*)(?!.*\\.$)(?!^\\.)[\\p{L}0-9._-]{1,64}@[A-Za-z0-9][A-Za-z0-9.-]{0,253}[A-Za-z0-9]\\.[A-Za-z]{2,}$";
+        Pattern emailPattern = Pattern.compile(emailRegex);
+        Matcher emailMatcher = emailPattern.matcher(email);
+        if (email.isBlank() || !emailMatcher.matches() ||
                 passwordHash == null || passwordHash.isBlank() ||
                 confirmedPassword == null || confirmedPassword.isBlank() || !confirmedPassword.equals(passwordHash)
         ){
