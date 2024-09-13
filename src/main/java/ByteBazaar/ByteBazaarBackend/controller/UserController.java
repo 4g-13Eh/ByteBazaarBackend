@@ -2,17 +2,17 @@ package ByteBazaar.ByteBazaarBackend.controller;
 
 import ByteBazaar.ByteBazaarBackend.entity.UserEntity;
 import ByteBazaar.ByteBazaarBackend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/users")
+@RequiredArgsConstructor
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
 
     @GetMapping
     List<UserEntity> getAllUsers(){

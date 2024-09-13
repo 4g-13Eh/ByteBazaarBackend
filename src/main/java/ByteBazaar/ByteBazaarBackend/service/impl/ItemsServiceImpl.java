@@ -6,20 +6,17 @@ import ByteBazaar.ByteBazaarBackend.exception.ItemNotFoundException;
 import ByteBazaar.ByteBazaarBackend.repository.ItemRepository;
 import ByteBazaar.ByteBazaarBackend.service.CategoryService;
 import ByteBazaar.ByteBazaarBackend.service.ItemService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class ItemsServiceImpl implements ItemService {
-
-    @Autowired
-    private CategoryService categoryService;
-
-    @Autowired
-    private ItemRepository itemRepository;
+    private final CategoryService categoryService;
+    private final ItemRepository itemRepository;
 
     @Override
     public List<ItemEntity> getAllItems(){

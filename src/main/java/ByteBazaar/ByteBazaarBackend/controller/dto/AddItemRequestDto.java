@@ -1,4 +1,4 @@
-package ByteBazaar.ByteBazaarBackend.dto;
+package ByteBazaar.ByteBazaarBackend.controller.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

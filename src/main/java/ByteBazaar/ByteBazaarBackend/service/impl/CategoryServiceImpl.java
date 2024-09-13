@@ -3,16 +3,16 @@ package ByteBazaar.ByteBazaarBackend.service.impl;
 import ByteBazaar.ByteBazaarBackend.entity.CategoryEntity;
 import ByteBazaar.ByteBazaarBackend.repository.CategoryRepository;
 import ByteBazaar.ByteBazaarBackend.service.CategoryService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
+@RequiredArgsConstructor
 public class CategoryServiceImpl implements CategoryService {
-    @Autowired
-    private CategoryRepository categoryRepository;
+    private final CategoryRepository categoryRepository;
 
     @Override
     public List<CategoryEntity> getCategoriesByNames(List<String> categoryNames) {

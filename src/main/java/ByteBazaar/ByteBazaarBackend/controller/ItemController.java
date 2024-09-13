@@ -2,17 +2,17 @@ package ByteBazaar.ByteBazaarBackend.controller;
 
 import ByteBazaar.ByteBazaarBackend.entity.ItemEntity;
 import ByteBazaar.ByteBazaarBackend.service.ItemService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/items")
+@RequiredArgsConstructor
 public class ItemController {
 
-    @Autowired
-    private ItemService itemService;
+    private final ItemService itemService;
 
     @GetMapping
     List<ItemEntity> getAllItems(){
@@ -23,8 +23,7 @@ public class ItemController {
     ItemEntity getItemById(@PathVariable("itemId") String itemId){
         return itemService.getItemById(itemId);
     }
-//    ToDo:
-//    Endpoint 4 category-filter
+
     @PostMapping
     List<ItemEntity> filterItem(@RequestBody List<String> categories){
         return itemService.filterItemByCategories(categories);

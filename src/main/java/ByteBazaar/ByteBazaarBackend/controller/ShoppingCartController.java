@@ -1,20 +1,20 @@
 package ByteBazaar.ByteBazaarBackend.controller;
 
-import ByteBazaar.ByteBazaarBackend.dto.AddItemRequestDto;
+import ByteBazaar.ByteBazaarBackend.controller.dto.AddItemRequestDto;
 import ByteBazaar.ByteBazaarBackend.entity.ShoppingCartEntity;
 import ByteBazaar.ByteBazaarBackend.entity.ShoppingCartItemEntity;
 import ByteBazaar.ByteBazaarBackend.service.ShoppingCartService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @RequestMapping("api/carts")
+@RequiredArgsConstructor
 public class ShoppingCartController {
 
-    @Autowired
-    private ShoppingCartService shoppingCartService;
+    private final ShoppingCartService shoppingCartService;
 
     @PostMapping
     public ShoppingCartEntity createShoppingCart(){

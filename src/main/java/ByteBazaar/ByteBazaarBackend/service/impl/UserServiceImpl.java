@@ -8,7 +8,7 @@ import ByteBazaar.ByteBazaarBackend.exception.UserNotFoundException;
 import ByteBazaar.ByteBazaarBackend.repository.UserRepository;
 import ByteBazaar.ByteBazaarBackend.service.ShoppingCartService;
 import ByteBazaar.ByteBazaarBackend.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -16,15 +16,11 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
-    private ShoppingCartService shoppingCartService;
+    private final PasswordEncoder passwordEncoder;
+    private final UserRepository userRepository;
+    private final ShoppingCartService shoppingCartService;
 
     @Override
     public UserEntity createUser(String email, String passwordHash, String confirmedPassword){

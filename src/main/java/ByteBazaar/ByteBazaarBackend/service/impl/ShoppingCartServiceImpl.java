@@ -8,24 +8,19 @@ import ByteBazaar.ByteBazaarBackend.repository.CartItemRepository;
 import ByteBazaar.ByteBazaarBackend.repository.ShoppingCartRepository;
 import ByteBazaar.ByteBazaarBackend.service.ItemService;
 import ByteBazaar.ByteBazaarBackend.service.ShoppingCartService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@RequiredArgsConstructor
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-
-    @Autowired
-    private ShoppingCartRepository shoppingCartRepository;
-
-    @Autowired
-    private CartItemRepository cartItemRepository;
-
-    @Autowired
-    private ItemService itemService;
-    private Optional<ShoppingCartItemEntity> itemToRemoveOpt;
+    private final ShoppingCartRepository shoppingCartRepository;
+    private final CartItemRepository cartItemRepository;
+    private final ItemService itemService;
+    private final Optional<ShoppingCartItemEntity> itemToRemoveOpt;
 
     @Override
     public ShoppingCartEntity createCart() {
