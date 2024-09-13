@@ -16,11 +16,6 @@ public class ShoppingCartController {
 
     private final ShoppingCartService shoppingCartService;
 
-    @PostMapping
-    public ShoppingCartEntity createShoppingCart(){
-        return shoppingCartService.createCart();
-    }
-
     @GetMapping("/{cartId}")
     public List<ShoppingCartItemEntity> getCartItems(@PathVariable("cartId") String cartId){
         return shoppingCartService.getCartItems(cartId);
