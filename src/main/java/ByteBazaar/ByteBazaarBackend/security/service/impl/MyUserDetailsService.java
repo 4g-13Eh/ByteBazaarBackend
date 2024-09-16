@@ -1,6 +1,5 @@
 package ByteBazaar.ByteBazaarBackend.security.service.impl;
 
-import ByteBazaar.ByteBazaarBackend.entity.UserEntity;
 import ByteBazaar.ByteBazaarBackend.exception.UserNotFoundException;
 import ByteBazaar.ByteBazaarBackend.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
