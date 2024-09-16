@@ -5,6 +5,7 @@ import ByteBazaar.ByteBazaarBackend.security.dto.SignInDto;
 import ByteBazaar.ByteBazaarBackend.security.dto.SignUpDto;
 import ByteBazaar.ByteBazaarBackend.security.service.AuthenticationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -18,12 +19,14 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/signup")
-    JwtTokenDto signup(@RequestBody SignUpDto data){
-        return authenticationService.signup(data);
+    ResponseEntity<JwtTokenDto> signup(@RequestBody SignUpDto data){
+        JwtTokenDto jwtToken = authenticationService.signup(data);
+        return ResponseEntity.ok(jwtToken);
     }
 
     @PostMapping("/signin")
-    JwtTokenDto signin(@RequestBody SignInDto data){
-        return authenticationService.signin(data);
+    ResponseEntity<JwtTokenDto> signin(@RequestBody SignInDto data){
+        JwtTokenDto jwtToken = authenticationService.signin(data);
+        return ResponseEntity.ok(jwtToken);
     }
 }

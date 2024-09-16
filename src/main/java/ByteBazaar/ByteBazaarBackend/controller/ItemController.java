@@ -3,6 +3,7 @@ package ByteBazaar.ByteBazaarBackend.controller;
 import ByteBazaar.ByteBazaarBackend.entity.ItemEntity;
 import ByteBazaar.ByteBazaarBackend.service.ItemService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,17 +16,26 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping
-    List<ItemEntity> getAllItems(){
-        return itemService.getAllItems();
+    public ResponseEntity<List<ItemEntity>> getAllItems(){
+        List<ItemEntity> items = itemService.getAllItems();
+        if (items.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(items);
     }
 
     @GetMapping("/{itemId}")
-    ItemEntity getItemById(@PathVariable("itemId") String itemId){
-        return itemService.getItemById(itemId);
+    public ResponseEntity<ItemEntity> getItemById(@PathVariable("itemId") String itemId){
+        ItemEntity item = itemService.getItemById(itemId);
+        return ResponseEntity.ok(item);
     }
 
     @PostMapping
-    List<ItemEntity> filterItem(@RequestBody List<String> categories){
-        return itemService.filterItemByCategories(categories);
+    public ResponseEntity<List<ItemEntity>> filterItem(@RequestBody List<String> categories){
+        List<ItemEntity> filteredItems = itemService.filterItemByCategories(categories);
+        if (filteredItems.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        return ResponseEntity.ok(filteredItems);
     }
 }
