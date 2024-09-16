@@ -34,6 +34,16 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.FORBIDDEN).body("Access denied.");
     }
 
+    @ExceptionHandler(ItemNotFoundException.class)
+    public ResponseEntity<String> handleItemNotFound(ItemNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Item not found");
+    }
+
+    @ExceptionHandler(ShoppingCartNotFoundException.class)
+    public ResponseEntity<String> handleShoppingCartNotFound(ShoppingCartNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cart not found");
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
