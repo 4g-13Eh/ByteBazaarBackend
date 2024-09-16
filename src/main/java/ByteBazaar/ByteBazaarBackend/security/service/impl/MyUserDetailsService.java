@@ -16,7 +16,6 @@ public class MyUserDetailsService implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) {
-        UserEntity user = userRepository.findByEmail(username).orElseThrow(UserNotFoundException::new);
-        return user;
+        return userRepository.findByEmail(username).orElseThrow(UserNotFoundException::new);
     }
 }

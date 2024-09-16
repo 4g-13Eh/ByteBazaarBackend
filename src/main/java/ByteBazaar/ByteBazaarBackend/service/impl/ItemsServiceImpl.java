@@ -9,6 +9,7 @@ import ByteBazaar.ByteBazaarBackend.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,7 +35,7 @@ public class ItemsServiceImpl implements ItemService {
 
         List<ItemEntity> items = getAllItems();
         items = items.stream()
-                .filter(item -> item.getCategories().containsAll(filterCategories))
+                .filter(item -> new HashSet<>(item.getCategories()).containsAll(filterCategories))
                 .collect(Collectors.toList());
 
         return items;

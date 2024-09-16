@@ -17,7 +17,7 @@ public class CategoryServiceImpl implements CategoryService {
     @Override
     public List<CategoryEntity> getCategoriesByNames(List<String> categoryNames) {
         return categoryNames.stream()
-                .map(categoryName -> categoryRepository.findByCategoryName(categoryName))
+                .map(categoryRepository::findByCategoryName)
                 .collect(Collectors.toList());
     }
 }
