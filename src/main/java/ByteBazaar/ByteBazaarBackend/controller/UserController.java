@@ -31,11 +31,6 @@ public class UserController {
         return ResponseEntity.ok(userService.getUserById(userId));
     }
 
-    @PutMapping("/{userId}")
-    public UserEntity assignCartToUser(@PathVariable("userId") String userId, String cartId){
-        return userService.assignCartToUser(userId, cartId);
-    }
-
     private UserDto convertToDto(UserEntity user) {
         return new UserDto(user.getUserId(), user.getEmail(), user.getCartId(), user.getUsername());
     }

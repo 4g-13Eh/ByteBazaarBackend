@@ -47,18 +47,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Boolean loginUser(String email, String password){
-        if (email == null || email.isBlank() || password == null || password.isBlank()){
-            throw new InvalidEmailOrPasswordException();
-        }
-        Optional<UserEntity> usr = userRepository.findByEmail(email);
-        if (usr.isEmpty() || !passwordEncoder.matches(password, usr.get().getPasswordHash())) {
-            throw new InvalidEmailOrPasswordException();
-        }
-        return true;
-    }
-
-    @Override
     public UserEntity getUserById(String id){
         return userRepository.findById(id).orElseThrow(UserNotFoundException::new);
     }
@@ -66,12 +54,5 @@ public class UserServiceImpl implements UserService {
     @Override
     public List<UserEntity> getAllUsers(){
         return userRepository.findAll();
-    }
-
-    @Override
-    public UserEntity assignCartToUser(String userId, String cartId){
-        UserEntity user = this.getUserById(userId);
-        user.setCartId(cartId);
-        return userRepository.save(user);
     }
 }

@@ -20,7 +20,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     private final ShoppingCartRepository shoppingCartRepository;
     private final CartItemRepository cartItemRepository;
     private final ItemService itemService;
-    private final Optional<ShoppingCartItemEntity> itemToRemoveOpt;
 
     @Override
     public ShoppingCartEntity createCart() {
@@ -43,12 +42,12 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCartEntity cart = getCartById(cartId);
         ItemEntity item = itemService.getItemById(itemId);
 
-        Optional<ShoppingCartItemEntity> exisitngItemOpt = cart.getCartItems().stream()
+        Optional<ShoppingCartItemEntity> existingItemOpt = cart.getCartItems().stream()
                 .filter(cartItem -> cartItem.getCartItem().getItemId().equals(itemId))
                 .findFirst();
 
-        if (exisitngItemOpt.isPresent()){
-            ShoppingCartItemEntity existingItem = exisitngItemOpt.get();
+        if (existingItemOpt.isPresent()){
+            ShoppingCartItemEntity existingItem = existingItemOpt.get();
             Integer currentQuantity = existingItem.getQuantity();
             if (currentQuantity == null){
                 currentQuantity = 0;
