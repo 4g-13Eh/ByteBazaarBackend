@@ -4,6 +4,7 @@ import ByteBazaar.ByteBazaarBackend.controller.dto.*;
 import ByteBazaar.ByteBazaarBackend.entity.ShoppingCartItemEntity;
 import ByteBazaar.ByteBazaarBackend.service.ShoppingCartService;
 import ByteBazaar.ByteBazaarBackend.utils.DtoConverter;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,18 +23,18 @@ public class ShoppingCartController {
     private final ShoppingCartService shoppingCartService;
 
     @GetMapping("/{cartId}")
-    public ResponseEntity<List<ShoppingCartItemDto>> getCartItems(@PathVariable("cartId") String cartId){
+    public ResponseEntity<List<@Valid ShoppingCartItemDto>> getCartItems(@PathVariable("cartId") String cartId){
         List<ShoppingCartItemEntity> carts = shoppingCartService.getCartItems(cartId);
         if (carts.isEmpty()){
             return ResponseEntity.noContent().build();
         }
-        List<ShoppingCartItemDto> cartItemDtos = carts.stream().map(DtoConverter::convertToShoppingCartItemDto).collect(Collectors.toList());
+        List<@Valid ShoppingCartItemDto> cartItemDtos = carts.stream().map(DtoConverter::convertToShoppingCartItemDto).collect(Collectors.toList());
         return ResponseEntity.ok(cartItemDtos);
     }
 
     @PutMapping("/{cartId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void addItem(@PathVariable("cartId") String cartId, @RequestBody AddItemRequestDto addItemRequestDto){
+    public void addItem(@PathVariable("cartId") String cartId, @RequestBody @Valid AddItemRequestDto addItemRequestDto){
         shoppingCartService.addItemToCart(cartId, addItemRequestDto.getItemId());
     }
 
