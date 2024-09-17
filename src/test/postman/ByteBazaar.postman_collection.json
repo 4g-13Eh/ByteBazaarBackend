@@ -7,6 +7,38 @@
 	},
 	"item": [
 		{
+			"name": "warmup",
+			"item": [
+				{
+					"name": "system warmup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"setTimeout(()=> {}, 10000);\r",
+									"pm.execution.setNextRequest(\"signup\");\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "localhost:8080/v3/api-docs"
+					},
+					"response": []
+				}
+			],
+			"description": "folder with a request that serves as a warmup for the db / backend"
+		},
+		{
 			"name": "auth",
 			"item": [
 				{
@@ -67,7 +99,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"real@undertail.com\",\r\n    \"password\": \"nyeh\",\r\n    \"confirmedPassword\": \"nyeh\"\r\n}",
+									"raw": "{\r\n    \"email\": \"real@edging.com\",\r\n    \"password\": \"Erm...What_the_Sigma?!\",\r\n    \"confirmedPassword\": \"Erm...What_the_Sigma?!\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -133,7 +165,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"real@undertail.com\",\r\n    \"password\": \"nyeh\"\r\n}",
+									"raw": "{\r\n    \"email\": \"real@edging.com\",\r\n    \"password\": \"Erm...What_the_Sigma?!\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
@@ -161,8 +193,8 @@
 											"});\r",
 											"\r",
 											"\r",
-											"pm.test(\"Response body contains the message 'Invalid email or password'\", function () {\r",
-											"    pm.expect(pm.response.text()).to.include('Invalid email or password');\r",
+											"pm.test(\"Response body contains the message 'Password must be at least'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include('Password must be at least');\r",
 											"});\r",
 											"\r",
 											"\r",
@@ -211,8 +243,8 @@
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Response status code is 500\", function () {\r",
-											"    pm.expect(pm.response.code).to.equal(500);\r",
+											"pm.test(\"Response status code is 401\", function () {\r",
+											"    pm.expect(pm.response.code).to.equal(401);\r",
 											"});\r",
 											"\r",
 											"\r",
@@ -274,19 +306,16 @@
 									"script": {
 										"exec": [
 											"pm.test(\"Response status code is 400\", function () {\r",
-											"    pm.expect(pm.response.code).to.equal(400);\r",
-											"  });\r",
-											"\r",
-											"\r",
-											"pm.test(\"Response Content-Type is text/plain\", function () {\r",
-											"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"text/plain\");\r",
+											"  pm.expect(pm.response.code).to.equal(400);\r",
 											"});\r",
 											"\r",
-											"\r",
-											"pm.test(\"Response body contains the message 'Invalid email or password.'\", function () {\r",
-											"    pm.expect(pm.response.text()).to.include(\"Invalid email or password.\");\r",
+											"pm.test(\"Response Content-Type is application/json\", function () {\r",
+											"  pm.expect(pm.response.headers.get(\"Content-Type\")).to.include(\"application/json\");\r",
 											"});\r",
 											"\r",
+											"pm.test(\"Response body contains the message 'Email must have valid format'\", function () {\r",
+											"    pm.expect(pm.response.text()).to.include(\"Email must have valid format\");\r",
+											"});\r",
 											"\r",
 											"pm.test(\"Response time is less than 200ms\", function () {\r",
 											"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
@@ -315,7 +344,7 @@
 								"header": [],
 								"body": {
 									"mode": "raw",
-									"raw": "{\r\n    \"email\": \"real\",\r\n    \"password\": \"nyeh\",\r\n    \"confirmedPassword\": \"nyeh\"\r\n}",
+									"raw": "{\r\n    \"email\": \"real\",\r\n    \"password\": \"sigmasigmasigma\",\r\n    \"confirmedPassword\": \"sigmasigmasigma\"\r\n}",
 									"options": {
 										"raw": {
 											"language": "json"
