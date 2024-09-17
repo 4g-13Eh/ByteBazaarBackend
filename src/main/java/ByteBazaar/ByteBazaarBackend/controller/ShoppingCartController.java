@@ -1,29 +1,34 @@
 package ByteBazaar.ByteBazaarBackend.controller;
 
-import ByteBazaar.ByteBazaarBackend.controller.dto.AddItemRequestDto;
+import ByteBazaar.ByteBazaarBackend.controller.dto.*;
 import ByteBazaar.ByteBazaarBackend.entity.ShoppingCartItemEntity;
 import ByteBazaar.ByteBazaarBackend.service.ShoppingCartService;
+import ByteBazaar.ByteBazaarBackend.utils.DtoConverter;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/carts")
 @RequiredArgsConstructor
+@Slf4j
 public class ShoppingCartController {
 
     private final ShoppingCartService shoppingCartService;
 
     @GetMapping("/{cartId}")
-    public ResponseEntity<List<ShoppingCartItemEntity>> getCartItems(@PathVariable("cartId") String cartId){
+    public ResponseEntity<List<ShoppingCartItemDto>> getCartItems(@PathVariable("cartId") String cartId){
         List<ShoppingCartItemEntity> carts = shoppingCartService.getCartItems(cartId);
         if (carts.isEmpty()){
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(carts);
+        List<ShoppingCartItemDto> cartItemDtos = carts.stream().map(DtoConverter::convertToShoppingCartItemDto).collect(Collectors.toList());
+        return ResponseEntity.ok(cartItemDtos);
     }
 
     @PutMapping("/{cartId}")

@@ -3,6 +3,7 @@ package ByteBazaar.ByteBazaarBackend.controller;
 import ByteBazaar.ByteBazaarBackend.controller.dto.UserDto;
 import ByteBazaar.ByteBazaarBackend.entity.UserEntity;
 import ByteBazaar.ByteBazaarBackend.service.UserService;
+import ByteBazaar.ByteBazaarBackend.utils.DtoConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,15 +24,13 @@ public class UserController {
         if (users.isEmpty()){
             ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(users.stream().map(this::convertToDto).collect(Collectors.toList()));
+        List<UserDto> userDtos = users.stream().map(DtoConverter::convertToUserDto).collect(Collectors.toList());
+        return ResponseEntity.ok(userDtos);
     }
 
     @GetMapping("/{userId}")
-    public ResponseEntity<UserEntity> getUserById(@PathVariable("userId") String userId){
-        return ResponseEntity.ok(userService.getUserById(userId));
-    }
-
-    private UserDto convertToDto(UserEntity user) {
-        return new UserDto(user.getUserId(), user.getEmail(), user.getCartId(), user.getUsername());
+    public ResponseEntity<UserDto> getUserById(@PathVariable("userId") String userId){
+        UserEntity user = userService.getUserById(userId);
+        return ResponseEntity.ok(DtoConverter.convertToUserDto(user));
     }
 }

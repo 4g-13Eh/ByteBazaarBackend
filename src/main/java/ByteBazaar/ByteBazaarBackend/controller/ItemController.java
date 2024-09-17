@@ -1,12 +1,15 @@
 package ByteBazaar.ByteBazaarBackend.controller;
 
+import ByteBazaar.ByteBazaarBackend.controller.dto.ItemDto;
 import ByteBazaar.ByteBazaarBackend.entity.ItemEntity;
 import ByteBazaar.ByteBazaarBackend.service.ItemService;
+import ByteBazaar.ByteBazaarBackend.utils.DtoConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("api/items")
@@ -16,26 +19,28 @@ public class ItemController {
     private final ItemService itemService;
 
     @GetMapping
-    public ResponseEntity<List<ItemEntity>> getAllItems(){
+    public ResponseEntity<List<ItemDto>> getAllItems(){
         List<ItemEntity> items = itemService.getAllItems();
         if (items.isEmpty()){
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(items);
+        List<ItemDto> itemDtos = items.stream().map(DtoConverter::convertToItemDto).collect(Collectors.toList());
+        return ResponseEntity.ok(itemDtos);
     }
 
     @GetMapping("/{itemId}")
-    public ResponseEntity<ItemEntity> getItemById(@PathVariable("itemId") String itemId){
+    public ResponseEntity<ItemDto> getItemById(@PathVariable("itemId") String itemId){
         ItemEntity item = itemService.getItemById(itemId);
-        return ResponseEntity.ok(item);
+        return ResponseEntity.ok(DtoConverter.convertToItemDto(item));
     }
 
     @PostMapping
-    public ResponseEntity<List<ItemEntity>> filterItem(@RequestBody List<String> categories){
+    public ResponseEntity<List<ItemDto>> filterItem(@RequestBody List<String> categories){
         List<ItemEntity> filteredItems = itemService.filterItemByCategories(categories);
         if (filteredItems.isEmpty()){
             return ResponseEntity.noContent().build();
         }
-        return ResponseEntity.ok(filteredItems);
+        List<ItemDto> itemDtos = filteredItems.stream().map(DtoConverter::convertToItemDto).collect(Collectors.toList());
+        return ResponseEntity.ok(itemDtos);
     }
 }

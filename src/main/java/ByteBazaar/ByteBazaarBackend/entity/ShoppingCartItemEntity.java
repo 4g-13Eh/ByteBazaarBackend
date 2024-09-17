@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import org.hibernate.annotations.UuidGenerator;
 
 @Entity
@@ -21,6 +22,7 @@ public class ShoppingCartItemEntity {
     @ManyToOne
     @JoinColumn(name = "cartId", referencedColumnName = "Id")
     @JsonIgnore // https://stackoverflow.com/a/67766027
+    @ToString.Exclude
     private ShoppingCartEntity cart;
 
     @ManyToOne
