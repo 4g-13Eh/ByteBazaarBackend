@@ -7,4 +7,5 @@ import ByteBazaar.ByteBazaarBackend.security.dto.SignUpDto;
 public interface AuthenticationService {
     JwtTokenDto signup(SignUpDto request);
     JwtTokenDto signin(SignInDto request);
+    void logout(String token);
 }

@@ -9,6 +9,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Table(name = "users")
@@ -26,6 +27,8 @@ public class UserEntity implements UserDetails {
     private String passwordHash;
     @Column(name = "cartId")
     private String cartId;
+    @OneToMany(mappedBy = "user")
+    private List<TokenEntity> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
