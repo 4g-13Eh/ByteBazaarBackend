@@ -31,10 +31,10 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
         http
+                .csrf(AbstractHttpConfigurer::disable)
                 .exceptionHandling(exp -> exp.authenticationEntryPoint(new
                         HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)
                 ))
-                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(request -> request
                         .requestMatchers("/error").permitAll()
                         .requestMatchers("/swagger-ui/**").permitAll()

@@ -1,9 +1,6 @@
 package ByteBazaar.ByteBazaarBackend.controller.controlleradvice;
 
 import ByteBazaar.ByteBazaarBackend.exception.*;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -41,7 +38,7 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(AccessDeniedException.class)
     public ResponseEntity<String> handleAccessDenied(AccessDeniedException ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized acess.");
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Unauthorized access.");
     }
 
     @ExceptionHandler(ItemNotFoundException.class)

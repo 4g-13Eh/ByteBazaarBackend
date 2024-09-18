@@ -3,6 +3,7 @@ package ByteBazaar.ByteBazaarBackend.security.config;
 import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
 import ByteBazaar.ByteBazaarBackend.security.service.impl.MyUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
+import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.security.SignatureException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
@@ -37,20 +38,23 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         final String authHeader = request.getHeader("Authorization");
         final String jwt;
         final String userEmail;
+
         try {
-            if (authHeader == null || !authHeader.startsWith("Bearer ")) {
+            if (authHeader == null || !authHeader.startsWith("Bearer ")){
                 filterChain.doFilter(request, response);
                 return;
             }
 
             jwt = authHeader.substring(7);
-
             userEmail = jwtService.extractUsername(jwt);
 
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                System.out.println("Loading user details for: " + userEmail);
                 UserDetails userDetails = myUserDetailsService.loadUserByUsername(userEmail);
+                System.out.println("User details loaded: " + userDetails.getUsername());
 
                 if (jwtService.isTokenValid(jwt, userDetails)) {
+                    System.out.println("Token is valid");
                     UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
                             userDetails,
                             null,
@@ -61,18 +65,12 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
 
-            filterChain.doFilter(request, response);
-
-        } catch (io.jsonwebtoken.MalformedJwtException e) {
+        } catch (MalformedJwtException | ExpiredJwtException | SignatureException ex) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().write("Invalid JWT token format");
-        } catch (ExpiredJwtException e) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().write("JWT token has expired");
-        } catch (SignatureException | IllegalArgumentException e) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().write("Invalid JWT signature or token");
+            response.getWriter().write("Invalid JWT: " + ex.getMessage());
+            return;
         }
 
+        filterChain.doFilter(request, response);
     }
 }
