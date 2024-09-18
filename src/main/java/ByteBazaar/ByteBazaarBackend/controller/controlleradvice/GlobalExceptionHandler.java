@@ -51,11 +51,6 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cart not found");
     }
 
-    @ExceptionHandler(NoJWTException.class)
-    public ResponseEntity<String> handleNoJWTException(NoJWTException ex) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("JWT's missing");
-    }
-
     @ExceptionHandler(HttpMessageNotReadableException.class)
     public ResponseEntity<String> handleInvalidRequestBody(HttpMessageNotReadableException ex) {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST)

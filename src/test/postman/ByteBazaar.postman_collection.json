@@ -23,6 +23,13 @@
 								"type": "text/javascript",
 								"packages": {}
 							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [],
+								"type": "text/javascript"
+							}
 						}
 					],
 					"request": {
@@ -1393,14 +1400,15 @@
 											"});\r",
 											"\r",
 											"\r",
-											"pm.collectionVariables.unset(\"token\");\r",
 											"pm.collectionVariables.unset(\"userId\");\r",
 											"pm.collectionVariables.unset(\"cartId\");\r",
 											"pm.collectionVariables.unset(\"category\");\r",
 											"pm.collectionVariables.unset(\"item\");\r",
 											"pm.collectionVariables.unset(\"itemId\");\r",
 											"\r",
-											"pm.execution.setNextRequest(null);"
+											"setTimeout(()=> {pm.execution.setNextRequest(\"expired jwt\")}, 20000);\r",
+											"\r",
+											""
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -1614,6 +1622,105 @@
 					]
 				}
 			]
+		},
+		{
+			"name": "invalid jwt",
+			"item": [
+				{
+					"name": "expired jwt",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 401\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(401);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is within an acceptable range\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'JWT expired'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"JWT expired\");\r",
+									"});\r",
+									"\r",
+									"pm.collectionVariables.unset(\"token\");\r",
+									"pm.execution.setNextRequest(\"empty bearer token\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{path}}/items"
+					},
+					"response": []
+				},
+				{
+					"name": "empty bearer token",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 401\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(401);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is within an acceptable range\", function () {\r",
+									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response body contains 'JWT strings must contain exactly 2 period'\", function () {\r",
+									"    pm.expect(pm.response.text()).to.include(\"JWT strings must contain exactly 2 period\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.execution.setNextRequest(null);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{path}}/items"
+					},
+					"response": []
+				}
+			],
+			"description": "requests / tests for invalidity of the jwt"
 		}
 	],
 	"event": [
