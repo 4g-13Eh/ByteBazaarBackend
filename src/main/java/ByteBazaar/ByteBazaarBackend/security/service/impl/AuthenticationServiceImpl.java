@@ -37,6 +37,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         tokenEntity.setRevoked(false);
         tokenRepository.save(tokenEntity);
 
+        System.out.println(tokenEntity.isExpired());
+        System.out.println(tokenEntity.isRevoked());
+
         return new JwtTokenDto(jwt);
     }
 

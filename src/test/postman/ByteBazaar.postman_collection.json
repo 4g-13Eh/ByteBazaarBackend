@@ -7,7 +7,7 @@
 	},
 	"item": [
 		{
-			"name": "warmup",
+			"name": "utility",
 			"item": [
 				{
 					"name": "system warmup",
@@ -39,6 +39,72 @@
 						"method": "GET",
 						"header": [],
 						"url": "localhost:8080/v3/api-docs"
+					},
+					"response": []
+				},
+				{
+					"name": "second signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.token).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const responseData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"token\", responseData.token);\r",
+									"\r",
+									"setTimeout(()=> {pm.execution.setNextRequest(\"expired jwt\")}, 25000);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"real@edging.com\",\r\n    \"password\": \"Erm...What_the_Sigma?!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{path}}/auth/signin"
 					},
 					"response": []
 				}
@@ -180,6 +246,55 @@
 									}
 								},
 								"url": "{{path}}/auth/signin"
+							},
+							"response": []
+						},
+						{
+							"name": "logout",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 204\", function () {\r",
+											"    pm.response.to.have.status(204);\r",
+											"});\r",
+											"\r",
+											"pm.test(\"Response time is within an acceptable range\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Null value in the response\", function () {\r",
+											"    const responseData = xml2Json(pm.response.text());\r",
+											"    \r",
+											"    pm.expect(responseData).to.be.null;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response body is empty\", function () {\r",
+											"    const responseData = xml2Json(pm.response.text());\r",
+											"    pm.expect(responseData).to.be.null;\r",
+											"});\r",
+											"\r",
+											"pm.execution.setNextRequest(\"empty bearer token\");\r",
+											"pm.collectionVariables.unset(\"token\");"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "bearer",
+									"bearer": {
+										"token": "{{token}}"
+									}
+								},
+								"method": "POST",
+								"header": [],
+								"url": "{{path}}/auth/logout"
 							},
 							"response": []
 						}
@@ -1406,7 +1521,7 @@
 											"pm.collectionVariables.unset(\"item\");\r",
 											"pm.collectionVariables.unset(\"itemId\");\r",
 											"\r",
-											"setTimeout(()=> {pm.execution.setNextRequest(\"expired jwt\")}, 20000);\r",
+											"pm.execution.setNextRequest(\"logout\");\r",
 											"\r",
 											""
 										],
@@ -1646,8 +1761,17 @@
 									"    pm.expect(pm.response.text()).to.include(\"JWT expired\");\r",
 									"});\r",
 									"\r",
-									"pm.collectionVariables.unset(\"token\");\r",
-									"pm.execution.setNextRequest(\"empty bearer token\");"
+									"pm.execution.setNextRequest(null);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -1688,7 +1812,7 @@
 									"});\r",
 									"\r",
 									"\r",
-									"pm.execution.setNextRequest(null);\r",
+									"pm.execution.setNextRequest(\"second signin\");\r",
 									""
 								],
 								"type": "text/javascript",

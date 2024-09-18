@@ -1,5 +1,6 @@
 package ByteBazaar.ByteBazaarBackend.security.service.impl;
 
+import ByteBazaar.ByteBazaarBackend.repository.TokenRepository;
 import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
 import io.github.cdimascio.dotenv.Dotenv;
 import io.jsonwebtoken.Claims;
@@ -7,6 +8,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -18,9 +20,11 @@ import java.util.Objects;
 import java.util.function.Function;
 
 @Service
+@RequiredArgsConstructor
 public class JwtServiceImpl implements JwtService {
 
     private static final String SECRET_KEY = Dotenv.load().get("SECRET_KEY");
+    private final TokenRepository tokenRepository;
 
     @Override
     public String extractUsername(String token) {

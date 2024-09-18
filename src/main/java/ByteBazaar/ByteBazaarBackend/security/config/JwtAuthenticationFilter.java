@@ -1,5 +1,7 @@
 package ByteBazaar.ByteBazaarBackend.security.config;
 
+import ByteBazaar.ByteBazaarBackend.entity.TokenEntity;
+import ByteBazaar.ByteBazaarBackend.repository.TokenRepository;
 import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
 import ByteBazaar.ByteBazaarBackend.security.service.impl.MyUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -27,6 +29,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final MyUserDetailsService myUserDetailsService;
+    private final TokenRepository tokenRepository;
 
     @Override
     protected void doFilterInternal(
@@ -45,7 +48,19 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
 
             jwt = authHeader.substring(7);
-            userEmail = jwtService.extractUsername(jwt);
+
+            try {
+                userEmail = jwtService.extractUsername(jwt);
+
+            } catch (ExpiredJwtException ex){
+                TokenEntity tokenEntity = tokenRepository.findByToken(jwt).orElseThrow();
+                tokenEntity.setExpired(true);
+                tokenRepository.save(tokenEntity);
+
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                response.getWriter().write("Invalid JWT: " + ex.getMessage());
+                return;
+            }
 
             if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 System.out.println("Loading user details for: " + userEmail);
@@ -64,7 +79,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
 
-        } catch (MalformedJwtException | ExpiredJwtException | SignatureException ex) {
+        } catch (MalformedJwtException | SignatureException ex) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().write("Invalid JWT: " + ex.getMessage());
             return;
