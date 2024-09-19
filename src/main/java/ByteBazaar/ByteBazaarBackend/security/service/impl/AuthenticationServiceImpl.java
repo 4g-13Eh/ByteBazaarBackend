@@ -16,6 +16,8 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
@@ -50,6 +52,15 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         );
         UserEntity user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(InvalidEmailOrPasswordException::new);
+
+        List<TokenEntity> validTokens = tokenRepository.findAllValidTokensByUser(user.getUserId());
+        if (!validTokens.isEmpty()) {
+            validTokens.forEach(token -> {
+                token.setRevoked(true);
+                tokenRepository.save(token);
+            });
+        }
+
         String jwt = this.jwtService.generateToken(user);
 
         TokenEntity token = new TokenEntity();
