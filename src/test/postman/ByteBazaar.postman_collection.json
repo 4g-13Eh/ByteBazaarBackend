@@ -107,6 +107,72 @@
 						"url": "{{path}}/auth/signin"
 					},
 					"response": []
+				},
+				{
+					"name": "third signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.token).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const responseData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"token\", responseData.token);\r",
+									"\r",
+									"pm.execution.setNextRequest(\"logout\")\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"real@edging.com\",\r\n    \"password\": \"Erm...What_the_Sigma?!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{path}}/auth/signin"
+					},
+					"response": []
 				}
 			],
 			"description": "folder with a request that serves as a warmup for the db / backend"
@@ -145,9 +211,6 @@
 											"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
 											"});\r",
 											"\r",
-											"\r",
-											"const responseData = pm.response.json();\r",
-											"pm.collectionVariables.set(\"token\", responseData.token);\r",
 											"\r",
 											"pm.execution.setNextRequest(\"signin\");\r",
 											""
@@ -278,7 +341,19 @@
 											"});\r",
 											"\r",
 											"pm.execution.setNextRequest(\"empty bearer token\");\r",
-											"pm.collectionVariables.unset(\"token\");"
+											"pm.collectionVariables.unset(\"token\");\r",
+											"\r",
+											"pm.execution.setNextRequest(null);"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -651,7 +726,7 @@
 											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
 											"});\r",
 											"\r",
-											"pm.execution.setNextRequest(\"no auth users\");\r",
+											"pm.execution.setNextRequest(\"no auth\");\r",
 											""
 										],
 										"type": "text/javascript",
@@ -679,50 +754,6 @@
 								"method": "GET",
 								"header": [],
 								"url": "{{path}}/users/803233snfjsnouiwfsj92"
-							},
-							"response": []
-						},
-						{
-							"name": "no auth users",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Response status code is 401\", function () {\r",
-											"    pm.expect(pm.response.code).to.equal(401);\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Response time is in an acceptable range\", function () {\r",
-											"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
-											"});\r",
-											"\r",
-											"pm.execution.setNextRequest(\"invalid itemId\");\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "GET",
-								"header": [],
-								"url": "{{path}}/users"
 							},
 							"response": []
 						}
@@ -1036,7 +1067,7 @@
 											"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
 											"});\r",
 											"\r",
-											"pm.execution.setNextRequest(\"no auth items\");\r",
+											"pm.execution.setNextRequest(\"invalid category\");\r",
 											""
 										],
 										"type": "text/javascript",
@@ -1064,50 +1095,6 @@
 								"method": "GET",
 								"header": [],
 								"url": "{{path}}/items/87317jkah793"
-							},
-							"response": []
-						},
-						{
-							"name": "no auth items",
-							"event": [
-								{
-									"listen": "test",
-									"script": {
-										"exec": [
-											"pm.test(\"Response status code is 401\", function () {\r",
-											"    pm.expect(pm.response.code).to.equal(401);\r",
-											"});\r",
-											"\r",
-											"\r",
-											"pm.test(\"Response time is less than 200ms\", function () {\r",
-											"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-											"});\r",
-											"\r",
-											"pm.execution.setNextRequest(\"invalid category\");\r",
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								},
-								{
-									"listen": "prerequest",
-									"script": {
-										"exec": [
-											""
-										],
-										"type": "text/javascript",
-										"packages": {}
-									}
-								}
-							],
-							"request": {
-								"auth": {
-									"type": "noauth"
-								},
-								"method": "GET",
-								"header": [],
-								"url": "{{path}}/items"
 							},
 							"response": []
 						},
@@ -1515,15 +1502,14 @@
 											"});\r",
 											"\r",
 											"\r",
+											"pm.collectionVariables.unset(\"token\");\r",
 											"pm.collectionVariables.unset(\"userId\");\r",
 											"pm.collectionVariables.unset(\"cartId\");\r",
 											"pm.collectionVariables.unset(\"category\");\r",
 											"pm.collectionVariables.unset(\"item\");\r",
 											"pm.collectionVariables.unset(\"itemId\");\r",
 											"\r",
-											"pm.execution.setNextRequest(\"logout\");\r",
-											"\r",
-											""
+											"pm.execution.setNextRequest(\"empty bearer token\");"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -1761,7 +1747,7 @@
 									"    pm.expect(pm.response.text()).to.include(\"JWT expired\");\r",
 									"});\r",
 									"\r",
-									"pm.execution.setNextRequest(null);"
+									"pm.execution.setNextRequest(\"third signin\");"
 								],
 								"type": "text/javascript",
 								"packages": {}
@@ -1840,6 +1826,50 @@
 						"method": "GET",
 						"header": [],
 						"url": "{{path}}/items"
+					},
+					"response": []
+				},
+				{
+					"name": "no auth",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 401\", function () {\r",
+									"    pm.expect(pm.response.code).to.equal(401);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is in an acceptable range\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
+									"});\r",
+									"\r",
+									"pm.execution.setNextRequest(\"invalid itemId\");\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{path}}/users"
 					},
 					"response": []
 				}
