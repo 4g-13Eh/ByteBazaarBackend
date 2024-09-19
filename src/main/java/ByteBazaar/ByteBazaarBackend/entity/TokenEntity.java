@@ -1,5 +1,6 @@
 package ByteBazaar.ByteBazaarBackend.entity;
 
+import ByteBazaar.ByteBazaarBackend.enumeration.TokenType;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,6 +22,9 @@ public class TokenEntity {
     private boolean expired;
     @Column(name = "is_revoked")
     private boolean revoked;
+    @Column(name = "token_type")
+    @Enumerated(EnumType.STRING)
+    private TokenType tokenType;
 
     @ManyToOne
     @JoinColumn(name = "userId")

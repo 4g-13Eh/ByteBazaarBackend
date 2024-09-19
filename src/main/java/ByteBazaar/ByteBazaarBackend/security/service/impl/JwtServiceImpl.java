@@ -62,7 +62,7 @@ public class JwtServiceImpl implements JwtService {
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 20000)) // ToDo: change back to 3-5min after implementing refreshtoken and update tests
+                .setExpiration(new Date(System.currentTimeMillis() + 20000)) // ToDo: change back to 3-5min after implementing refreshtoken and update tests (180000)
                 .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
     }
 
