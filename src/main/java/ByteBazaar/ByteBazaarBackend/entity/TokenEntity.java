@@ -15,7 +15,7 @@ public class TokenEntity {
     @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column(name = "token")
+    @Column(name = "token", unique = true)
     private String token;
     @Column(name = "is_expired")
     private boolean expired;

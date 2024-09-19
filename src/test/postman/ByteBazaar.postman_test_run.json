@@ -1,22 +1,22 @@
 {
-	"id": "27639d28-4502-4657-9525-d0f230c039a3",
+	"id": "9788c2b7-cd35-4e2f-9af4-f9d58d9f9242",
 	"name": "ByteBazaar",
-	"timestamp": "2024-09-19T06:30:06.121Z",
+	"timestamp": "2024-09-19T13:08:18.296Z",
 	"collection_id": "26136977-76e393c0-a5e2-458a-b375-05daf79512b9",
 	"folder_id": 0,
 	"environment_id": "0",
-	"totalPass": 97,
+	"totalPass": 96,
 	"delay": 0,
 	"persist": true,
 	"status": "finished",
-	"startedAt": "2024-09-19T06:29:27.641Z",
-	"totalFail": 0,
+	"startedAt": "2024-09-19T13:07:38.316Z",
+	"totalFail": 1,
 	"results": [
 		{
 			"id": "6b4623d1-7c86-4990-9f8e-fc1b103ee7d7",
 			"name": "system warmup",
 			"url": "localhost:8080/v3/api-docs",
-			"time": 14,
+			"time": 766,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -24,7 +24,7 @@
 			"tests": {},
 			"testPassFailCounts": {},
 			"times": [
-				14
+				766
 			],
 			"allTests": [
 				{}
@@ -34,14 +34,14 @@
 			"id": "3f3c81a3-6553-4d3e-94a8-c8433722f5eb",
 			"name": "signup",
 			"url": "localhost:8080/api/auth/signup",
-			"time": 88,
+			"time": 335,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
 			},
 			"tests": {
 				"Response status code is 200": true,
-				"Response time is less than 200ms": true,
+				"Response time is less than 200ms": false,
 				"Response has the required fields": true,
 				"Token is a non-empty string": true
 			},
@@ -51,8 +51,8 @@
 					"fail": 0
 				},
 				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
+					"pass": 0,
+					"fail": 1
 				},
 				"Response has the required fields": {
 					"pass": 1,
@@ -64,12 +64,12 @@
 				}
 			},
 			"times": [
-				88
+				335
 			],
 			"allTests": [
 				{
 					"Response status code is 200": true,
-					"Response time is less than 200ms": true,
+					"Response time is less than 200ms": false,
 					"Response has the required fields": true,
 					"Token is a non-empty string": true
 				}
@@ -79,7 +79,7 @@
 			"id": "7ca2874c-7927-4807-9a11-615f0816bc0e",
 			"name": "signin",
 			"url": "localhost:8080/api/auth/signin",
-			"time": 82,
+			"time": 181,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -109,7 +109,7 @@
 				}
 			},
 			"times": [
-				82
+				181
 			],
 			"allTests": [
 				{
@@ -124,7 +124,7 @@
 			"id": "2c22db90-2206-4a91-8a2d-a2435f6c410a",
 			"name": "get all users",
 			"url": "localhost:8080/api/users",
-			"time": 11,
+			"time": 78,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -154,7 +154,7 @@
 				}
 			},
 			"times": [
-				11
+				78
 			],
 			"allTests": [
 				{
@@ -168,8 +168,8 @@
 		{
 			"id": "e9a423e5-3b9c-41b3-a713-c2886771fc87",
 			"name": "get user by Id",
-			"url": "localhost:8080/api/users/9da23046-c0b4-4b68-a45e-6d99ecdc5405",
-			"time": 23,
+			"url": "localhost:8080/api/users/778a2655-f934-4e56-b646-461a96f77704",
+			"time": 30,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -199,7 +199,7 @@
 				}
 			},
 			"times": [
-				23
+				30
 			],
 			"allTests": [
 				{
@@ -214,7 +214,7 @@
 			"id": "05b4ea7a-bdf4-42dd-8541-f91d470e5a3b",
 			"name": "get all items",
 			"url": "localhost:8080/api/items",
-			"time": 29,
+			"time": 186,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -249,7 +249,7 @@
 				}
 			},
 			"times": [
-				29
+				186
 			],
 			"allTests": [
 				{
@@ -265,7 +265,7 @@
 			"id": "b839c308-dfa3-40aa-8a02-1815d2046041",
 			"name": "get item by Id",
 			"url": "localhost:8080/api/items/01fd8574-da95-4549-8c23-79212d909ca6",
-			"time": 10,
+			"time": 26,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -300,7 +300,7 @@
 				}
 			},
 			"times": [
-				10
+				26
 			],
 			"allTests": [
 				{
@@ -316,7 +316,7 @@
 			"id": "62495f8d-0d98-44c9-baab-8f68fcc164e4",
 			"name": "get item by categories",
 			"url": "localhost:8080/api/items",
-			"time": 30,
+			"time": 47,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -351,7 +351,7 @@
 				}
 			},
 			"times": [
-				30
+				47
 			],
 			"allTests": [
 				{
@@ -366,8 +366,8 @@
 		{
 			"id": "68a8a92e-0a14-426a-80d1-122471c4ffe2",
 			"name": "add item to cart",
-			"url": "localhost:8080/api/carts/99661b4d-3084-41c0-89cc-2c37fdc45c1b",
-			"time": 17,
+			"url": "localhost:8080/api/carts/2696719b-60ab-4088-946c-9932b5a717bf",
+			"time": 51,
 			"responseCode": {
 				"code": 204,
 				"name": "No Content"
@@ -387,7 +387,7 @@
 				}
 			},
 			"times": [
-				17
+				51
 			],
 			"allTests": [
 				{
@@ -399,8 +399,8 @@
 		{
 			"id": "57f8c652-b9d2-4cb8-a971-79859f2152e3",
 			"name": "get total quantity",
-			"url": "localhost:8080/api/carts/quantity/99661b4d-3084-41c0-89cc-2c37fdc45c1b",
-			"time": 13,
+			"url": "localhost:8080/api/carts/quantity/2696719b-60ab-4088-946c-9932b5a717bf",
+			"time": 20,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -425,7 +425,7 @@
 				}
 			},
 			"times": [
-				13
+				20
 			],
 			"allTests": [
 				{
@@ -438,8 +438,8 @@
 		{
 			"id": "39fbf343-1f19-44d5-8451-963f5133c6d2",
 			"name": "update quantity",
-			"url": "localhost:8080/api/carts/quantity/99661b4d-3084-41c0-89cc-2c37fdc45c1b/01fd8574-da95-4549-8c23-79212d909ca6",
-			"time": 20,
+			"url": "localhost:8080/api/carts/quantity/2696719b-60ab-4088-946c-9932b5a717bf/01fd8574-da95-4549-8c23-79212d909ca6",
+			"time": 34,
 			"responseCode": {
 				"code": 204,
 				"name": "No Content"
@@ -459,7 +459,7 @@
 				}
 			},
 			"times": [
-				20
+				34
 			],
 			"allTests": [
 				{
@@ -471,8 +471,8 @@
 		{
 			"id": "572fb1af-0bfa-4f69-98e3-d2a3d37a6b2d",
 			"name": "get cartitems",
-			"url": "localhost:8080/api/carts/99661b4d-3084-41c0-89cc-2c37fdc45c1b",
-			"time": 15,
+			"url": "localhost:8080/api/carts/2696719b-60ab-4088-946c-9932b5a717bf",
+			"time": 26,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -502,7 +502,7 @@
 				}
 			},
 			"times": [
-				15
+				26
 			],
 			"allTests": [
 				{
@@ -516,8 +516,8 @@
 		{
 			"id": "c574f223-8340-426a-ac5c-43c2e3a1d8b7",
 			"name": "remove item",
-			"url": "localhost:8080/api/carts/99661b4d-3084-41c0-89cc-2c37fdc45c1b/01fd8574-da95-4549-8c23-79212d909ca6",
-			"time": 17,
+			"url": "localhost:8080/api/carts/2696719b-60ab-4088-946c-9932b5a717bf/01fd8574-da95-4549-8c23-79212d909ca6",
+			"time": 40,
 			"responseCode": {
 				"code": 204,
 				"name": "No Content"
@@ -547,7 +547,7 @@
 				}
 			},
 			"times": [
-				17
+				40
 			],
 			"allTests": [
 				{
@@ -562,7 +562,7 @@
 			"id": "cf286685-905f-4c20-9aa2-f58d1e77d52d",
 			"name": "invalid signup",
 			"url": "localhost:8080/api/auth/signup",
-			"time": 4,
+			"time": 10,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -587,7 +587,7 @@
 				}
 			},
 			"times": [
-				4
+				10
 			],
 			"allTests": [
 				{
@@ -601,7 +601,7 @@
 			"id": "634318d4-91b4-40f2-a558-a6eed3e3de70",
 			"name": "invalid signin",
 			"url": "localhost:8080/api/auth/signin",
-			"time": 11,
+			"time": 13,
 			"responseCode": {
 				"code": 401,
 				"name": "Unauthorized"
@@ -631,7 +631,7 @@
 				}
 			},
 			"times": [
-				11
+				13
 			],
 			"allTests": [
 				{
@@ -646,7 +646,7 @@
 			"id": "74878a6c-0d08-4bb6-859c-b450a2259356",
 			"name": "invalid email",
 			"url": "localhost:8080/api/auth/signup",
-			"time": 3,
+			"time": 6,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -676,7 +676,7 @@
 				}
 			},
 			"times": [
-				3
+				6
 			],
 			"allTests": [
 				{
@@ -691,7 +691,7 @@
 			"id": "b3714dbe-9d94-4318-9d5b-079fcb8d4411",
 			"name": "invalid userId",
 			"url": "localhost:8080/api/users/803233snfjsnouiwfsj92",
-			"time": 10,
+			"time": 20,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -711,7 +711,7 @@
 				}
 			},
 			"times": [
-				10
+				20
 			],
 			"allTests": [
 				{
@@ -757,7 +757,7 @@
 			"id": "23c40d44-6717-4377-bb1e-7c576e1bbeed",
 			"name": "invalid itemId",
 			"url": "localhost:8080/api/items/87317jkah793",
-			"time": 34,
+			"time": 17,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -782,7 +782,7 @@
 				}
 			},
 			"times": [
-				34
+				17
 			],
 			"allTests": [
 				{
@@ -796,7 +796,7 @@
 			"id": "5a9e17c7-322c-4aa4-a826-e4a10e98ab13",
 			"name": "invalid category",
 			"url": "localhost:8080/api/items",
-			"time": 23,
+			"time": 48,
 			"responseCode": {
 				"code": 204,
 				"name": "No Content"
@@ -821,7 +821,7 @@
 				}
 			},
 			"times": [
-				23
+				48
 			],
 			"allTests": [
 				{
@@ -835,7 +835,7 @@
 			"id": "88fd1690-eb82-4c11-b52f-f1f1a96aa9b6",
 			"name": "invalid cartid",
 			"url": "localhost:8080/api/carts/quantity/tghb654r",
-			"time": 9,
+			"time": 19,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -855,7 +855,7 @@
 				}
 			},
 			"times": [
-				9
+				19
 			],
 			"allTests": [
 				{
@@ -867,8 +867,8 @@
 		{
 			"id": "52b2ee47-0bcd-4118-9b5c-73ae586b80b2",
 			"name": "invalid itemId update",
-			"url": "localhost:8080/api/carts/99661b4d-3084-41c0-89cc-2c37fdc45c1b",
-			"time": 11,
+			"url": "localhost:8080/api/carts/2696719b-60ab-4088-946c-9932b5a717bf",
+			"time": 25,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -898,7 +898,7 @@
 				}
 			},
 			"times": [
-				11
+				25
 			],
 			"allTests": [
 				{
@@ -912,8 +912,8 @@
 		{
 			"id": "01590e86-e222-46c4-a602-36c24435ec1f",
 			"name": "invalid quantity",
-			"url": "localhost:8080/api/carts/quantity/99661b4d-3084-41c0-89cc-2c37fdc45c1b/01fd8574-da95-4549-8c23-79212d909ca6",
-			"time": 8,
+			"url": "localhost:8080/api/carts/quantity/2696719b-60ab-4088-946c-9932b5a717bf/01fd8574-da95-4549-8c23-79212d909ca6",
+			"time": 19,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -938,7 +938,7 @@
 				}
 			},
 			"times": [
-				8
+				19
 			],
 			"allTests": [
 				{
@@ -951,8 +951,8 @@
 		{
 			"id": "4a2c5605-f9e9-481b-b875-cf97aa5c1d97",
 			"name": "clear cart",
-			"url": "localhost:8080/api/carts/99661b4d-3084-41c0-89cc-2c37fdc45c1b",
-			"time": 13,
+			"url": "localhost:8080/api/carts/2696719b-60ab-4088-946c-9932b5a717bf",
+			"time": 32,
 			"responseCode": {
 				"code": 204,
 				"name": "No Content"
@@ -977,7 +977,7 @@
 				}
 			},
 			"times": [
-				13
+				32
 			],
 			"allTests": [
 				{
@@ -991,7 +991,7 @@
 			"id": "5026df5e-b212-4159-9de0-dcbb161b8fe5",
 			"name": "empty bearer token",
 			"url": "localhost:8080/api/items",
-			"time": 3,
+			"time": 8,
 			"responseCode": {
 				"code": 401,
 				"name": "Unauthorized"
@@ -1016,7 +1016,7 @@
 				}
 			},
 			"times": [
-				3
+				8
 			],
 			"allTests": [
 				{
@@ -1030,7 +1030,7 @@
 			"id": "a0ef1afd-29af-42e5-ab9d-c2dbaed51ecd",
 			"name": "second signin",
 			"url": "localhost:8080/api/auth/signin",
-			"time": 79,
+			"time": 96,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1060,7 +1060,7 @@
 				}
 			},
 			"times": [
-				79
+				96
 			],
 			"allTests": [
 				{
@@ -1075,7 +1075,7 @@
 			"id": "f344ee1e-493b-40fe-9e98-42899aa05cc7",
 			"name": "expired jwt",
 			"url": "localhost:8080/api/items",
-			"time": 21,
+			"time": 35,
 			"responseCode": {
 				"code": 401,
 				"name": "Unauthorized"
@@ -1100,7 +1100,7 @@
 				}
 			},
 			"times": [
-				21
+				35
 			],
 			"allTests": [
 				{
@@ -1114,7 +1114,7 @@
 			"id": "d9eab9ee-d6d3-451d-9f69-f71ea98cf0fb",
 			"name": "third signin",
 			"url": "localhost:8080/api/auth/signin",
-			"time": 94,
+			"time": 82,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1144,7 +1144,7 @@
 				}
 			},
 			"times": [
-				94
+				82
 			],
 			"allTests": [
 				{
@@ -1159,7 +1159,7 @@
 			"id": "b03ecf20-f39e-476a-a96e-46a44dd4cea8",
 			"name": "logout",
 			"url": "localhost:8080/api/auth/logout",
-			"time": 15,
+			"time": 30,
 			"responseCode": {
 				"code": 204,
 				"name": "No Content"
@@ -1189,7 +1189,7 @@
 				}
 			},
 			"times": [
-				15
+				30
 			],
 			"allTests": [
 				{
@@ -1202,7 +1202,7 @@
 		}
 	],
 	"count": 1,
-	"totalTime": 710,
+	"totalTime": 2283,
 	"collection": {
 		"requests": [
 			{

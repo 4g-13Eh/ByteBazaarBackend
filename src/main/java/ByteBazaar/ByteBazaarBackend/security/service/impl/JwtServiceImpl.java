@@ -1,5 +1,6 @@
 package ByteBazaar.ByteBazaarBackend.security.service.impl;
 
+import ByteBazaar.ByteBazaarBackend.entity.TokenEntity;
 import ByteBazaar.ByteBazaarBackend.repository.TokenRepository;
 import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -13,10 +14,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.security.Key;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 import java.util.function.Function;
 
 @Service
@@ -39,7 +37,17 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUsername(token);
-        return (userName.equals(userDetails.getUsername())) && !isTokenExpired(token);
+        boolean isExpired = isTokenExpired(token);
+        TokenEntity tokenEntity = tokenRepository.findByToken(token).orElseThrow();
+
+        if (isExpired) {
+            return false;
+        }
+        if (tokenEntity.isRevoked()){
+            return false;
+        }
+
+        return (userName.equals(userDetails.getUsername()));
     }
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
@@ -47,7 +55,8 @@ public class JwtServiceImpl implements JwtService {
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(Map<String, Objects> extraClaims, UserDetails userDetails) {
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+        extraClaims.put("jti", UUID.randomUUID().toString());
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
