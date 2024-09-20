@@ -69,6 +69,15 @@ public class JwtServiceImpl implements JwtService {
         tokenRepository.save(tokenEntity);
     }
 
+    @Override
+    public void updateRefreshToken(UserEntity user, String oldRefreshToken, String newRefreshToken) {
+        TokenEntity tokenEntity = tokenRepository.findByToken(oldRefreshToken).orElseThrow(TokenNotFoundException::new);
+        tokenEntity.setRevoked(true);
+        tokenRepository.save(tokenEntity);
+        saveToken(user, newRefreshToken, TokenType.REFRESH);
+    }
+
+
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);

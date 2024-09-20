@@ -87,10 +87,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             UserEntity user = userRepository.findByEmail(username).orElseThrow(UserNotFoundException::new);
             String newAccessToken = jwtService.generateToken(user, TokenType.ACCESS);
 
-            // Optionally refresh the refresh token (rotate) for security
-//             String newRefreshToken = jwtService.generateToken(user, TokenType.REFRESH);
-//             jwtService.updateRefreshToken(user, refreshToken, newRefreshToken);
-//             cookieService.addRefreshTokenToCookie(response, newRefreshToken);
+            // Refresh token rotation
+             String newRefreshToken = jwtService.generateToken(user, TokenType.REFRESH);
+             jwtService.updateRefreshToken(user, refreshToken, newRefreshToken);
+             cookieService.addRefreshTokenToCookie(response, newRefreshToken);
 
             revokeAllValidAccessTokens(user.getUserId());
             jwtService.saveToken(user, newAccessToken, TokenType.ACCESS);
