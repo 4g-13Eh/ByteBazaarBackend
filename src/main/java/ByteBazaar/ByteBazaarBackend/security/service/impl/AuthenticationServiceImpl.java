@@ -82,7 +82,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     public JwtTokenDto refreshAccessToken(HttpServletRequest request, HttpServletResponse response) {
         String refreshToken = cookieService.getRefreshTokenFromCookie(request);
         Optional<TokenEntity> token = tokenRepository.findByToken(refreshToken);
-        if (refreshToken != null && token.get().getTokenType() == TokenType.REFRESH){
+        if (refreshToken != null && token.isPresent() && token.get().getTokenType() == TokenType.REFRESH){
             String username = jwtService.extractUsername(refreshToken);
             UserEntity user = userRepository.findByEmail(username).orElseThrow(UserNotFoundException::new);
             String newAccessToken = jwtService.generateToken(user, TokenType.ACCESS);
@@ -100,20 +100,19 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         return null;
     }
 
-    private void revokeAllValidTokens(String userId){
+    private void revokeAllValidTokens(String userId) {
         List<TokenEntity> validTokens = tokenRepository.findAllValidTokensByUser(userId);
-        if (!validTokens.isEmpty()) {
-            validTokens.forEach(token -> {
-                token.setRevoked(true);
-                tokenRepository.save(token);
-            });
-        }
+        revokeTokens(validTokens);
     }
 
-    private void revokeAllValidAccessTokens(String userId){
-        List<TokenEntity> validTokens = tokenRepository.findAllValidAccessTokensByUser(userId);
-        if (!validTokens.isEmpty()) {
-            validTokens.forEach(token -> {
+    private void revokeAllValidAccessTokens(String userId) {
+        List<TokenEntity> validAccessTokens = tokenRepository.findAllValidAccessTokensByUser(userId);
+        revokeTokens(validAccessTokens);
+    }
+
+    private void revokeTokens(List<TokenEntity> tokens) {
+        if (!tokens.isEmpty()) {
+            tokens.forEach(token -> {
                 token.setRevoked(true);
                 tokenRepository.save(token);
             });

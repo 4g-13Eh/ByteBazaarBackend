@@ -5,7 +5,6 @@ import ByteBazaar.ByteBazaarBackend.security.dto.SignInDto;
 import ByteBazaar.ByteBazaarBackend.security.dto.SignUpDto;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.springframework.http.ResponseEntity;
 
 public interface AuthenticationService {
     JwtTokenDto signup(SignUpDto request);
