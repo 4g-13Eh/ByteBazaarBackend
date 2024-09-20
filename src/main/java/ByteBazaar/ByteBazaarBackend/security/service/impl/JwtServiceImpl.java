@@ -1,6 +1,8 @@
 package ByteBazaar.ByteBazaarBackend.security.service.impl;
 
 import ByteBazaar.ByteBazaarBackend.entity.TokenEntity;
+import ByteBazaar.ByteBazaarBackend.entity.UserEntity;
+import ByteBazaar.ByteBazaarBackend.enumeration.TokenType;
 import ByteBazaar.ByteBazaarBackend.repository.TokenRepository;
 import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -10,6 +12,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +25,10 @@ import java.util.function.Function;
 public class JwtServiceImpl implements JwtService {
 
     private static final String SECRET_KEY = Dotenv.load().get("SECRET_KEY");
+    @Value("${application.security.jwt.access.expiration}")
+    private long accessTokenExpiration;
+    @Value("${application.security.jwt.refresh.expiration}")
+    private long refreshTokenExpiration;
     private final TokenRepository tokenRepository;
 
     @Override
@@ -30,8 +37,8 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public String generateToken(UserDetails userDetails){
-        return generateToken(new HashMap<>(), userDetails);
+    public String generateToken(UserDetails userDetails, TokenType tokenType){
+        return generateToken(new HashMap<>(), userDetails, tokenType);
     }
 
     @Override
@@ -50,20 +57,33 @@ public class JwtServiceImpl implements JwtService {
         return (userName.equals(userDetails.getUsername()));
     }
 
+    @Override
+    public void saveToken(UserEntity user, String token, TokenType tokenType){
+        TokenEntity tokenEntity = new TokenEntity();
+        tokenEntity.setToken(token);
+        tokenEntity.setUser(user);
+        tokenEntity.setTokenType(tokenType);
+        tokenEntity.setExpired(false);
+        tokenEntity.setRevoked(false);
+        tokenRepository.save(tokenEntity);
+    }
+
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
         final Claims claims = extractAllClaims(token);
         return claimsResolver.apply(claims);
     }
 
-    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
+    public String generateToken(Map<String, Object> extraClaims, UserDetails userDetails, TokenType tokenType) {
+        long expirationTime = (tokenType == TokenType.ACCESS) ? accessTokenExpiration : refreshTokenExpiration;
         extraClaims.put("jti", UUID.randomUUID().toString());
         return Jwts
                 .builder()
                 .setClaims(extraClaims)
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 20000)) // ToDo: change back to 3-5min after implementing refreshtoken and update tests (180000)
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
+                .setExpiration(new Date(System.currentTimeMillis() + expirationTime))
+                .signWith(getSigningKey(), SignatureAlgorithm.HS256)
+                .compact();
     }
 
     private boolean isTokenExpired(String token){

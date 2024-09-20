@@ -5,6 +5,7 @@ import ByteBazaar.ByteBazaarBackend.security.dto.SignInDto;
 import ByteBazaar.ByteBazaarBackend.security.dto.SignUpDto;
 import ByteBazaar.ByteBazaarBackend.security.service.AuthenticationService;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -27,21 +28,27 @@ public class AuthenticationController {
     }
 
     @PostMapping("/signin")
-    public ResponseEntity<JwtTokenDto> signin(@RequestBody @Valid SignInDto data){
-        JwtTokenDto jwtToken = authenticationService.signin(data);
+    public ResponseEntity<JwtTokenDto> signin(@RequestBody @Valid SignInDto data, HttpServletResponse response){
+        JwtTokenDto jwtToken = authenticationService.signin(data, response);
         return ResponseEntity.ok(jwtToken);
     }
 
     @PostMapping("/logout")
-    public ResponseEntity<String> logout(HttpServletRequest request) {
+    public ResponseEntity<String> logout(HttpServletRequest request, HttpServletResponse response) {
         String authHeader = request.getHeader("Authorization");
         if (authHeader == null || !authHeader.startsWith("Bearer ")) {
             return ResponseEntity.badRequest().body("Invalid Token");
         }
 
         String token = authHeader.substring(7);
-        authenticationService.logout(token);
+        authenticationService.logout(token, response);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @PostMapping("/refresh")
+    public ResponseEntity<JwtTokenDto> refreshToken(HttpServletRequest request, HttpServletResponse response) {
+        JwtTokenDto newAccessToken = authenticationService.refreshAccessToken(request, response);
+        return ResponseEntity.ok(newAccessToken);
     }
 }
