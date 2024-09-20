@@ -12,7 +12,7 @@ public class CookieServiceImpl implements CookieService {
     public void addRefreshTokenToCookie(HttpServletResponse response, String refreshToken) {
         Cookie cookie = new Cookie("refreshToken", refreshToken);
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(7 * 24 * 60 * 60);
+        cookie.setMaxAge(7 * 24 * 60 * 60); // One week
         cookie.setPath("/api");
         cookie.setSecure(true);
         response.addCookie(cookie);

@@ -75,6 +75,11 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("An unexpected error occurred: Bad credentials");
     }
 
+    @ExceptionHandler(TokenNotFoundException.class)
+    public ResponseEntity<String> handleTokenNotFound(TokenNotFoundException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Token not found");
+    }
+
     @ExceptionHandler(Exception.class)
     public ResponseEntity<String> handleGeneralException(Exception ex) {
         return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

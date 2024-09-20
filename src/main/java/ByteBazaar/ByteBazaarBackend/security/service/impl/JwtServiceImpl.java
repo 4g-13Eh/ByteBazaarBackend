@@ -3,6 +3,7 @@ package ByteBazaar.ByteBazaarBackend.security.service.impl;
 import ByteBazaar.ByteBazaarBackend.entity.TokenEntity;
 import ByteBazaar.ByteBazaarBackend.entity.UserEntity;
 import ByteBazaar.ByteBazaarBackend.enumeration.TokenType;
+import ByteBazaar.ByteBazaarBackend.exception.TokenNotFoundException;
 import ByteBazaar.ByteBazaarBackend.repository.TokenRepository;
 import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -45,7 +46,7 @@ public class JwtServiceImpl implements JwtService {
     public boolean isTokenValid(String token, UserDetails userDetails) {
         final String userName = extractUsername(token);
         boolean isExpired = isTokenExpired(token);
-        TokenEntity tokenEntity = tokenRepository.findByToken(token).orElseThrow();
+        TokenEntity tokenEntity = tokenRepository.findByToken(token).orElseThrow(TokenNotFoundException::new);
 
         if (isExpired) {
             return false;

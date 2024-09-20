@@ -173,6 +173,144 @@
 						"url": "{{path}}/auth/signin"
 					},
 					"response": []
+				},
+				{
+					"name": "fourth signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.token).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"const responseData = pm.response.json();\r",
+									"pm.collectionVariables.set(\"token\", responseData.token);\r",
+									"\r",
+									"setTimeout(()=>{pm.execution.setNextRequest(\"refresh\")}, 25000);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"real@edging.com\",\r\n    \"password\": \"Erm...What_the_Sigma?!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{path}}/auth/signin"
+					},
+					"response": []
+				},
+				{
+					"name": "test refresh",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.response.to.have.status(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response time is within acceptable range\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    pm.expect(responseData).to.be.an('array');\r",
+									"    \r",
+									"    responseData.forEach(function(user) {\r",
+									"        pm.expect(user).to.be.an('object');\r",
+									"        pm.expect(user).to.have.property('userId');\r",
+									"        pm.expect(user).to.have.property('email');\r",
+									"        pm.expect(user).to.have.property('cartId');\r",
+									"        pm.expect(user).to.have.property('username');\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.test(\"Email is in a valid format\", function () {\r",
+									"    const responseData = pm.response.json();\r",
+									"    \r",
+									"    responseData.forEach(function(user) {\r",
+									"        pm.expect(user.email).to.be.a('string').and.to.match(/^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$/);\r",
+									"    });\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.execution.setNextRequest(null);\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": {
+								"token": "{{token}}"
+							}
+						},
+						"method": "GET",
+						"header": [],
+						"url": "{{path}}/users"
+					},
+					"response": []
 				}
 			],
 			"description": "folder with a request that serves as a warmup for the db / backend"
@@ -343,7 +481,7 @@
 											"pm.execution.setNextRequest(\"empty bearer token\");\r",
 											"pm.collectionVariables.unset(\"token\");\r",
 											"\r",
-											"pm.execution.setNextRequest(null);"
+											"pm.execution.setNextRequest(\"fourth signin\");"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -370,6 +508,65 @@
 								"method": "POST",
 								"header": [],
 								"url": "{{path}}/auth/logout"
+							},
+							"response": []
+						},
+						{
+							"name": "refresh",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Response status code is 200\", function () {\r",
+											"    pm.response.to.have.status(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"\r",
+											"pm.test(\"Response time is less than 200ms\", function () {\r",
+											"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Token field is present in the response\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  pm.expect(responseData.token).to.exist;\r",
+											"});\r",
+											"\r",
+											"\r",
+											"pm.test(\"Token is a non-empty string\", function () {\r",
+											"  const responseData = pm.response.json();\r",
+											"  \r",
+											"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should be a non-empty string\");\r",
+											"});\r",
+											"\r",
+											"const responseData = pm.response.json();\r",
+											"pm.collectionVariables.set(\"token\", responseData.token);\r",
+											"pm.execution.setNextRequest(\"test refresh\");"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "POST",
+								"header": [],
+								"url": "{{path}}/auth/refresh"
 							},
 							"response": []
 						}
@@ -1904,6 +2101,10 @@
 			"key": "path",
 			"value": "localhost:8080/api",
 			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": ""
 		}
 	]
 }
