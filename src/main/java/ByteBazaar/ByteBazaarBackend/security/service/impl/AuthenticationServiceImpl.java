@@ -88,10 +88,11 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             String newAccessToken = jwtService.generateToken(user, TokenType.ACCESS);
 
             // Optionally refresh the refresh token (rotate) for security
-            // String newRefreshToken = jwtService.generateToken(user, TokenType.REFRESH);
-            // jwtService.updateRefreshToken(user, refreshToken, newRefreshToken);
-            // cookieUtil.addRefreshTokenToCookie(response, newRefreshToken);
+//             String newRefreshToken = jwtService.generateToken(user, TokenType.REFRESH);
+//             jwtService.updateRefreshToken(user, refreshToken, newRefreshToken);
+//             cookieService.addRefreshTokenToCookie(response, newRefreshToken);
 
+            revokeAllValidAccessTokens(user.getUserId());
             jwtService.saveToken(user, newAccessToken, TokenType.ACCESS);
             return new JwtTokenDto(newAccessToken);
         }
@@ -101,6 +102,16 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     private void revokeAllValidTokens(String userId){
         List<TokenEntity> validTokens = tokenRepository.findAllValidTokensByUser(userId);
+        if (!validTokens.isEmpty()) {
+            validTokens.forEach(token -> {
+                token.setRevoked(true);
+                tokenRepository.save(token);
+            });
+        }
+    }
+
+    private void revokeAllValidAccessTokens(String userId){
+        List<TokenEntity> validTokens = tokenRepository.findAllValidAccessTokensByUser(userId);
         if (!validTokens.isEmpty()) {
             validTokens.forEach(token -> {
                 token.setRevoked(true);
