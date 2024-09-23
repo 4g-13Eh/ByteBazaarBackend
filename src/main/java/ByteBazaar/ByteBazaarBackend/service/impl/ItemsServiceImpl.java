@@ -53,6 +53,7 @@ public class ItemsServiceImpl implements ItemService {
         ItemEntity item = getItemById(itemId);
         if (item.getStock_num() >= quantity){
             item.setStock_num(item.getStock_num() - quantity);
+            itemRepository.save(item);
         } else {
             throw new InsufficientStockException();
         }
