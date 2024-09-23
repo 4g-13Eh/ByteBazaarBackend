@@ -44,4 +44,10 @@ public class ItemController {
         List<@Valid ItemDto> itemDtos = filteredItems.stream().map(DtoConverter::convertToItemDto).collect(Collectors.toList());
         return ResponseEntity.ok(itemDtos);
     }
+
+    @GetMapping("/stock/{itemId}")
+    public ResponseEntity<Integer> getItemStock(@PathVariable("itemId") String itemId){
+        return ResponseEntity.ok(itemService.getItemStockNum(itemId));
+    }
+
 }
