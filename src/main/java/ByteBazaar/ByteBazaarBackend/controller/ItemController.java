@@ -50,4 +50,10 @@ public class ItemController {
         return ResponseEntity.ok(itemService.getItemStockNum(itemId));
     }
 
+    @PostMapping("/stock/{itemId}")
+    public ResponseEntity<String> decreseItemStock(@PathVariable("itemId") String itemId, @RequestBody Integer quantity){
+        itemService.decreaseItemStock(itemId, quantity);
+        return ResponseEntity.ok("New Stock:"+itemService.getItemStockNum(itemId));
+    }
+
 }
