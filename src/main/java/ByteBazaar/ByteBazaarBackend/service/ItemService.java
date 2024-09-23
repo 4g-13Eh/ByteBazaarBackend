@@ -10,4 +10,5 @@ public interface ItemService {
     List<ItemEntity> filterItemByCategories(List<String> categories);
     Integer getItemStockNum(String itemId);
     void decreaseItemStock(String itemId, Integer quantity);
+    List<ItemEntity> searchItems(String searchQuery);
 }

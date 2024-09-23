@@ -58,4 +58,12 @@ public class ItemsServiceImpl implements ItemService {
             throw new InsufficientStockException();
         }
     }
+
+    @Override
+    public List<ItemEntity> searchItems(String searchQuery){
+        List<ItemEntity> items = getAllItems();
+        items = items.stream().filter(item -> item.getName().toLowerCase().contains(searchQuery.toLowerCase()))
+                .collect(Collectors.toList());
+        return items;
+    }
 }

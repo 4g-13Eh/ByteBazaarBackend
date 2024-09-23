@@ -51,9 +51,21 @@ public class ItemController {
     }
 
     @PostMapping("/stock/{itemId}")
-    public ResponseEntity<String> decreseItemStock(@PathVariable("itemId") String itemId, @RequestBody Integer quantity){
+    public ResponseEntity<String> decreaseItemStock(
+            @PathVariable("itemId") String itemId,
+            @RequestBody Integer quantity
+    ){
         itemService.decreaseItemStock(itemId, quantity);
         return ResponseEntity.ok("New Stock:"+itemService.getItemStockNum(itemId));
     }
 
+    @PostMapping(value = "/search")
+    public ResponseEntity<List<@Valid ItemDto>> searchItem(@RequestBody String searchString){
+        List<ItemEntity> items = itemService.searchItems(searchString);
+        if (items.isEmpty()){
+            return ResponseEntity.noContent().build();
+        }
+        List<@Valid ItemDto> itemDtos = items.stream().map(DtoConverter::convertToItemDto).collect(Collectors.toList());
+        return ResponseEntity.ok(itemDtos);
+    }
 }
