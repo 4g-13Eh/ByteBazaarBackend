@@ -2,6 +2,7 @@ package ByteBazaar.ByteBazaarBackend.service.impl;
 
 import ByteBazaar.ByteBazaarBackend.entity.CategoryEntity;
 import ByteBazaar.ByteBazaarBackend.entity.ItemEntity;
+import ByteBazaar.ByteBazaarBackend.exception.InsufficientStockException;
 import ByteBazaar.ByteBazaarBackend.exception.ItemNotFoundException;
 import ByteBazaar.ByteBazaarBackend.repository.ItemRepository;
 import ByteBazaar.ByteBazaarBackend.service.CategoryService;
@@ -39,5 +40,21 @@ public class ItemsServiceImpl implements ItemService {
                 .collect(Collectors.toList());
 
         return items;
+    }
+
+    @Override
+    public Integer getItemStockNum(String itemId){
+        ItemEntity item = getItemById(itemId);
+        return item.getStock_num();
+    }
+
+    @Override
+    public void decreaseItemStock(String itemId, Integer quantity){
+        ItemEntity item = getItemById(itemId);
+        if (item.getStock_num() >= quantity){
+            item.setStock_num(item.getStock_num() - quantity);
+        } else {
+            throw new InsufficientStockException();
+        }
     }
 }
