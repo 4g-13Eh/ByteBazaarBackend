@@ -56,7 +56,7 @@ public class ItemController {
             @RequestBody Integer quantity
     ){
         itemService.decreaseItemStock(itemId, quantity);
-        return ResponseEntity.ok("New Stock:"+itemService.getItemStockNum(itemId));
+        return ResponseEntity.ok("New Stock: "+itemService.getItemStockNum(itemId));
     }
 
     @PostMapping(value = "/search")
