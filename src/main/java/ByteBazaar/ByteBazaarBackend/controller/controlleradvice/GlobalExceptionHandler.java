@@ -82,7 +82,12 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(InsufficientStockException.class)
     public ResponseEntity<String> handleInsufficientStock(InsufficientStockException ex){
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Token not found");
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Insufficient stock to decrease.");
+    }
+
+    @ExceptionHandler(InvalidQuantityException.class)
+    public ResponseEntity<String> handleInvalidQuantity(InvalidQuantityException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Invalid quantity. Must be a positive integer value");
     }
 
     @ExceptionHandler(Exception.class)
