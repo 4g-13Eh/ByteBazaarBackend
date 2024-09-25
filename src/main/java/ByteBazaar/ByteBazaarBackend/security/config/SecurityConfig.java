@@ -38,7 +38,9 @@ public class SecurityConfig {
                 registry.addMapping("/api/**")
                         .allowedOrigins("http://localhost:4200")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("*");
+                        .allowedHeaders("Authorization", "Content-Type", "X-Requested-With")
+                        .exposedHeaders("Authorization")
+                        .allowCredentials(true);
             }
         };
     }
