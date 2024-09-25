@@ -3,6 +3,7 @@ package ByteBazaar.ByteBazaarBackend.security.config;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
@@ -38,7 +39,7 @@ public class SecurityConfig {
                 registry.addMapping("/api/**")
                         .allowedOrigins("http://localhost:4200")
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
-                        .allowedHeaders("Authorization", "Content-Type", "X-Requested-With")
+                        .allowedHeaders("*")
                         .exposedHeaders("Authorization")
                         .allowCredentials(true);
             }
@@ -59,6 +60,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/auth/signin").permitAll()
                         .requestMatchers("/api/auth/signup").permitAll()
                         .requestMatchers("/api/auth/refresh").permitAll()
+                        .requestMatchers(HttpMethod.OPTIONS, "/**").permitAll()
                         .anyRequest().authenticated()
                 )
                 .sessionManagement(manager -> manager.sessionCreationPolicy(STATELESS))

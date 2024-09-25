@@ -1,6 +1,7 @@
 package ByteBazaar.ByteBazaarBackend.security.config;
 
 import ByteBazaar.ByteBazaarBackend.entity.TokenEntity;
+import ByteBazaar.ByteBazaarBackend.exception.TokenNotFoundException;
 import ByteBazaar.ByteBazaarBackend.repository.TokenRepository;
 import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
 import ByteBazaar.ByteBazaarBackend.security.service.impl.MyUserDetailsService;
@@ -53,7 +54,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 userEmail = jwtService.extractUsername(jwt);
 
             } catch (ExpiredJwtException ex){
-                TokenEntity tokenEntity = tokenRepository.findByToken(jwt).orElseThrow();
+                TokenEntity tokenEntity = tokenRepository.findByToken(jwt).orElseThrow(TokenNotFoundException::new);
                 tokenEntity.setExpired(true);
                 tokenRepository.save(tokenEntity);
 
