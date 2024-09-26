@@ -34,4 +34,10 @@ public class UserController {
         UserEntity user = userService.getUserById(userId);
         return ResponseEntity.ok(DtoConverter.convertToUserDto(user));
     }
+
+    @GetMapping("/email/{email}")
+    public ResponseEntity<@Valid UserDto> getUserByEmail(@PathVariable("email") String email){
+        UserEntity user = userService.getUserByEmail(email);
+        return ResponseEntity.ok(DtoConverter.convertToUserDto(user));
+    }
 }

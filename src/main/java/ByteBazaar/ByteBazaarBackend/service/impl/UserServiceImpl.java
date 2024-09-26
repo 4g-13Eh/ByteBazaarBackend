@@ -51,6 +51,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public UserEntity getUserByEmail(String email){
+        return userRepository.findByEmail(email).orElseThrow(UserAlreadyExistsException::new);
+    }
+
+    @Override
     public List<UserEntity> getAllUsers(){
         return userRepository.findAll();
     }
