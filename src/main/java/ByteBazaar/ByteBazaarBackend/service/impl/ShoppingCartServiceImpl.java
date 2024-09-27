@@ -48,6 +48,8 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         ShoppingCartEntity cart = getCartById(cartId);
         ItemEntity item = itemService.getItemById(itemId);
 
+        if (!item.getIn_stock()) return;
+
         Optional<ShoppingCartItemEntity> existingItemOpt = cart.getCartItems().stream()
                 .filter(cartItem -> cartItem.getCartItem().getItemId().equals(itemId))
                 .findFirst();
@@ -113,7 +115,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
             if (newQuantity >= 0 && newQuantity <= itemToUpdate.getCartItem().getStock_num()){
                 itemToUpdate.setQuantity(newQuantity);
             } else {
-                itemToUpdate.setQuantity(1);
+                itemToUpdate.setQuantity(itemToUpdate.getCartItem().getStock_num());
             }
         }
         shoppingCartRepository.save(cart);
