@@ -50,13 +50,13 @@ public class ItemController {
         return ResponseEntity.ok(itemService.getItemStockNum(itemId));
     }
 
-    @PostMapping("/stock/{itemId}")
+    @PutMapping("/stock/{itemId}")
     public ResponseEntity<String> decreaseItemStock(
             @PathVariable("itemId") String itemId,
             @RequestBody Integer quantity
     ){
         itemService.decreaseItemStock(itemId, quantity);
-        return ResponseEntity.ok("New Stock: "+itemService.getItemStockNum(itemId));
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping(value = "/search")
