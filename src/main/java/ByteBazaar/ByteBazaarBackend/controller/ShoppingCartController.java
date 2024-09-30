@@ -51,7 +51,7 @@ public class ShoppingCartController {
     }
 
     @GetMapping("/quantity/{cartId}")
-    public ResponseEntity<Integer> getCartCount(@PathVariable("cartId") String cartId){
+    public ResponseEntity<Integer> getCartQuantity(@PathVariable("cartId") String cartId){
         Integer count = shoppingCartService.getTotalQuantityForCart(cartId);
         return ResponseEntity.ok(count);
     }
