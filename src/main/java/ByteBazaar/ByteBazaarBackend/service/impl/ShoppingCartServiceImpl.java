@@ -95,9 +95,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     @Override
     public Integer getTotalQuantityForCart(String cartId){
         Integer count = cartItemRepository.getTotalQuantityByCartId(cartId);
-        if (count == null){
-            throw new ShoppingCartNotFoundException();
-        }
         return count;
     }
 
