@@ -4,6 +4,7 @@ import ByteBazaar.ByteBazaarBackend.controller.dto.UserDto;
 import ByteBazaar.ByteBazaarBackend.entity.UserEntity;
 import ByteBazaar.ByteBazaarBackend.service.UserService;
 import ByteBazaar.ByteBazaarBackend.utils.DtoConverter;
+import jakarta.servlet.http.HttpServletRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -38,6 +39,12 @@ public class UserController {
     @GetMapping("/email/{email}")
     public ResponseEntity<@Valid UserDto> getUserByEmail(@PathVariable("email") String email){
         UserEntity user = userService.getUserByEmail(email);
+        return ResponseEntity.ok(DtoConverter.convertToUserDto(user));
+    }
+
+    @GetMapping("/currentUser")
+    public ResponseEntity<@Valid UserDto> getCurrentUser(HttpServletRequest request) {
+        UserEntity user = userService.getCurrentUser(request);
         return ResponseEntity.ok(DtoConverter.convertToUserDto(user));
     }
 }

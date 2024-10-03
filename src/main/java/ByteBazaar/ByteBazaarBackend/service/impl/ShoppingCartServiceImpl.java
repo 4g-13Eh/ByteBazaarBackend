@@ -9,8 +9,6 @@ import ByteBazaar.ByteBazaarBackend.repository.ShoppingCartRepository;
 import ByteBazaar.ByteBazaarBackend.service.ItemService;
 import ByteBazaar.ByteBazaarBackend.service.ShoppingCartService;
 import lombok.RequiredArgsConstructor;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -19,7 +17,6 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class ShoppingCartServiceImpl implements ShoppingCartService {
-    private static final Logger log = LoggerFactory.getLogger(ShoppingCartServiceImpl.class);
     private final ShoppingCartRepository shoppingCartRepository;
     private final CartItemRepository cartItemRepository;
     private final ItemService itemService;
@@ -37,9 +34,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     public List<ShoppingCartItemEntity> getCartItems(String cartId) {
-        log.info("Fetching cart for cartId: {}", cartId);
-        log.info("Found cart: {}", getCartById(cartId));
-        log.info("Cart items: {}", getCartById(cartId).getCartItems());
         return getCartById(cartId).getCartItems();
     }
 

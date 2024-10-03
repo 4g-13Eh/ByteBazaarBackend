@@ -4,6 +4,7 @@ import ByteBazaar.ByteBazaarBackend.entity.TokenEntity;
 import ByteBazaar.ByteBazaarBackend.entity.UserEntity;
 import ByteBazaar.ByteBazaarBackend.enumeration.TokenType;
 import ByteBazaar.ByteBazaarBackend.exception.InvalidEmailOrPasswordException;
+import ByteBazaar.ByteBazaarBackend.exception.TokenNotFoundException;
 import ByteBazaar.ByteBazaarBackend.exception.UserNotFoundException;
 import ByteBazaar.ByteBazaarBackend.repository.TokenRepository;
 import ByteBazaar.ByteBazaarBackend.repository.UserRepository;
@@ -35,7 +36,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
     private final CookieService cookieService;
 
     @Override
-    public JwtTokenDto signup(SignUpDto request) {
+    public JwtTokenDto signup(SignUpDto request, HttpServletResponse response) {
         UserEntity user = userService.createUser(request.getEmail(), request.getPassword(), request.getConfirmedPassword());
 
         String accessToken = this.jwtService.generateToken(user, TokenType.ACCESS);
@@ -43,6 +44,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
         jwtService.saveToken(user, accessToken, TokenType.ACCESS);
         jwtService.saveToken(user, refreshToken, TokenType.REFRESH);
+
+        cookieService.addTokenToCookie(response, accessToken, TokenType.ACCESS);
+        cookieService.addTokenToCookie(response, refreshToken, TokenType.REFRESH);
 
         return new JwtTokenDto(accessToken);
     }
@@ -52,6 +56,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword())
         );
+
         UserEntity user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(InvalidEmailOrPasswordException::new);
 
@@ -63,36 +68,50 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         jwtService.saveToken(user, accessToken, TokenType.ACCESS);
         jwtService.saveToken(user, refreshToken, TokenType.REFRESH);
 
-        cookieService.addRefreshTokenToCookie(response, refreshToken);
+        cookieService.addTokenToCookie(response, accessToken, TokenType.ACCESS);
+        cookieService.addTokenToCookie(response, refreshToken, TokenType.REFRESH);
 
         return new JwtTokenDto(accessToken);
     }
 
     @Override
-    public void logout(String token, HttpServletResponse response){
-        TokenEntity tokenEntity = tokenRepository.findByToken(token)
+    public void logout(HttpServletRequest request, HttpServletResponse response){
+        String accessToken = cookieService.getTokenFromCookie(request, TokenType.ACCESS);
+        String refreshToken = cookieService.getTokenFromCookie(request, TokenType.REFRESH);
+
+        TokenEntity accessTokenEntity = tokenRepository.findByToken(accessToken)
                 .orElseThrow(() -> new IllegalArgumentException("Token not found"));
 
-        tokenEntity.setRevoked(true);
-        cookieService.clearRefreshTokenCookie(response);
-        tokenRepository.save(tokenEntity);
+        TokenEntity refreshTokenEntity = tokenRepository.findByToken(refreshToken)
+                .orElseThrow(() -> new IllegalArgumentException("Token not found"));
+
+        accessTokenEntity.setRevoked(true);
+        refreshTokenEntity.setRevoked(true);
+        cookieService.clearTokenCookie(response, TokenType.ACCESS);
+        cookieService.clearTokenCookie(response, TokenType.REFRESH);
+
+        tokenRepository.save(accessTokenEntity);
+        tokenRepository.save(refreshTokenEntity);
     }
 
     @Override
     public JwtTokenDto refreshAccessToken(HttpServletRequest request, HttpServletResponse response) {
-        String refreshToken = cookieService.getRefreshTokenFromCookie(request);
-        Optional<TokenEntity> token = tokenRepository.findByToken(refreshToken);
-        if (refreshToken != null && token.isPresent() && token.get().getTokenType() == TokenType.REFRESH){
+        String refreshToken = cookieService.getTokenFromCookie(request, TokenType.REFRESH);
+        TokenEntity token = tokenRepository.findByToken(refreshToken).orElseThrow(TokenNotFoundException::new);
+
+        if (refreshToken != null
+                && token.getTokenType() == TokenType.REFRESH
+                && refreshToken.equals(token.getToken())
+        ){
             String username = jwtService.extractUsername(refreshToken);
             UserEntity user = userRepository.findByEmail(username).orElseThrow(UserNotFoundException::new);
-            String newAccessToken = jwtService.generateToken(user, TokenType.ACCESS);
-
-            // Refresh token rotation
-             String newRefreshToken = jwtService.generateToken(user, TokenType.REFRESH);
-             jwtService.updateRefreshToken(user, refreshToken, newRefreshToken);
-             cookieService.addRefreshTokenToCookie(response, newRefreshToken);
 
             revokeAllValidAccessTokens(user.getUserId());
+            this.cookieService.clearTokenCookie(response, TokenType.ACCESS);
+
+            String newAccessToken = jwtService.generateToken(user, TokenType.ACCESS);
+            this.cookieService.addTokenToCookie(response, newAccessToken, TokenType.ACCESS);
+
             jwtService.saveToken(user, newAccessToken, TokenType.ACCESS);
             return new JwtTokenDto(newAccessToken);
         }

@@ -1,8 +1,7 @@
 package ByteBazaar.ByteBazaarBackend.security.config;
 
-import ByteBazaar.ByteBazaarBackend.entity.TokenEntity;
-import ByteBazaar.ByteBazaarBackend.exception.TokenNotFoundException;
 import ByteBazaar.ByteBazaarBackend.repository.TokenRepository;
+import ByteBazaar.ByteBazaarBackend.security.service.CookieService;
 import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
 import ByteBazaar.ByteBazaarBackend.security.service.impl.MyUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -31,6 +30,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final MyUserDetailsService myUserDetailsService;
     private final TokenRepository tokenRepository;
+    private final CookieService cookieService;
 
     @Override
     protected void doFilterInternal(
@@ -38,54 +38,33 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        final String authHeader = request.getHeader("Authorization");
-        final String jwt;
-        final String userEmail;
+        System.out.println("Entering filtercahin");
 
-        try {
-            if (authHeader == null || !authHeader.startsWith("Bearer ")){
-                filterChain.doFilter(request, response);
-                return;
-            }
+        String jwt = jwtService.getTokenFromRequest(request);
 
-            jwt = authHeader.substring(7);
-
-            try {
-                userEmail = jwtService.extractUsername(jwt);
-
-            } catch (ExpiredJwtException ex){
-                TokenEntity tokenEntity = tokenRepository.findByToken(jwt).orElseThrow(TokenNotFoundException::new);
-                tokenEntity.setExpired(true);
-                tokenRepository.save(tokenEntity);
-
-                response.setStatus(HttpStatus.UNAUTHORIZED.value());
-                response.getWriter().write("Invalid JWT: " + ex.getMessage());
-                return;
-            }
-
-            if (userEmail != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-                System.out.println("Loading user details for: " + userEmail);
-                UserDetails userDetails = myUserDetailsService.loadUserByUsername(userEmail);
-                System.out.println("User details loaded: " + userDetails.getUsername());
-
-                if (jwtService.isTokenValid(jwt, userDetails)) {
-                    System.out.println("Token is valid");
-                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
-                            userDetails,
-                            null,
-                            userDetails.getAuthorities()
-                    );
-                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                    SecurityContextHolder.getContext().setAuthentication(authToken);
-                }
-            }
-
-        } catch (MalformedJwtException | SignatureException ex) {
-            response.setStatus(HttpStatus.UNAUTHORIZED.value());
-            response.getWriter().write("Invalid JWT: " + ex.getMessage());
+        if (jwt == null) {
+            System.out.println("No JWT found, continuing filter chain.");
+            filterChain.doFilter(request, response);
             return;
         }
 
+        try {
+            String userEmail = jwtService.extractUsername(jwt);
+            if (userEmail == null && SecurityContextHolder.getContext().getAuthentication() != null) return;
+            UserDetails userDetails = myUserDetailsService.loadUserByUsername(userEmail);
+            if (jwtService.isTokenValid(jwt)){
+                UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities()
+                );
+                authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authToken);
+            }
+        } catch (ExpiredJwtException | MalformedJwtException | SignatureException ex) {
+            response.setStatus(HttpStatus.UNAUTHORIZED.value());
+            response.getWriter().write("Invalid Token: " + ex.getMessage());
+        }
+
+        System.out.println("Filter finished");
         filterChain.doFilter(request, response);
     }
 }

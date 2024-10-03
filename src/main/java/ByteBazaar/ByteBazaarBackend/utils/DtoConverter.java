@@ -3,14 +3,11 @@ package ByteBazaar.ByteBazaarBackend.utils;
 import ByteBazaar.ByteBazaarBackend.controller.dto.*;
 import ByteBazaar.ByteBazaarBackend.entity.*;
 import jakarta.validation.Valid;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.util.stream.Collectors;
 
 public class DtoConverter {
 
-    private static final Logger log = LoggerFactory.getLogger(DtoConverter.class);
 
     public static @Valid ItemDto convertToItemDto(ItemEntity item) {
         return new ItemDto(item.getItemId(), item.getName(), item.getDescription(), item.getPicture(),
@@ -27,7 +24,6 @@ public class DtoConverter {
     }
 
     public static @Valid ShoppingCartItemDto convertToShoppingCartItemDto(ShoppingCartItemEntity cartItem) {
-        log.info("Converting ShoppingCartItemEntity to DTO: {}", cartItem);
         return new ShoppingCartItemDto(cartItem.getId(), null,
                 convertToItemDto(cartItem.getCartItem()), cartItem.getQuantity());
     }

@@ -57,7 +57,7 @@ public class ItemsServiceImpl implements ItemService {
             itemRepository.save(item);
         } else if (quantity <= 0) {
             throw new InvalidQuantityException();
-        } else if (item.getStock_num() <= quantity){
+        } else {
             throw new InsufficientStockException();
         }
     }

@@ -1,5 +1,6 @@
 package ByteBazaar.ByteBazaarBackend.security.service.impl;
 
+import ByteBazaar.ByteBazaarBackend.enumeration.TokenType;
 import ByteBazaar.ByteBazaarBackend.security.service.CookieService;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -9,20 +10,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class CookieServiceImpl implements CookieService {
     @Override
-    public void addRefreshTokenToCookie(HttpServletResponse response, String refreshToken) {
-        Cookie cookie = new Cookie("refreshToken", refreshToken);
+    public void addTokenToCookie(HttpServletResponse response, String token, TokenType tokenType) {
+        String cookieName = (tokenType == TokenType.ACCESS) ? "accessToken" : "refreshToken";
+        Cookie cookie = new Cookie(cookieName, token);
         cookie.setHttpOnly(true);
-        cookie.setMaxAge(7 * 24 * 60 * 60); // One week
+        if (tokenType == TokenType.REFRESH){
+            cookie.setMaxAge(300); // One week
+        } else if (tokenType == TokenType.ACCESS) {
+            cookie.setMaxAge(180); // One day
+        }
         cookie.setPath("/api");
         cookie.setSecure(true);
         response.addCookie(cookie);
     }
 
     @Override
-    public String getRefreshTokenFromCookie(HttpServletRequest request) {
+    public String getTokenFromCookie(HttpServletRequest request, TokenType tokenType) {
+        String cookieName = (tokenType == TokenType.ACCESS) ? "accessToken" : "refreshToken";
         if (request.getCookies() != null) {
             for (Cookie cookie : request.getCookies()) {
-                if ("refreshToken".equals(cookie.getName())) {
+                if (cookieName.equals(cookie.getName())) {
                     return cookie.getValue();
                 }
             }
@@ -31,8 +38,9 @@ public class CookieServiceImpl implements CookieService {
     }
 
     @Override
-    public void clearRefreshTokenCookie(HttpServletResponse response) {
-        Cookie cookie = new Cookie("refreshToken", null);
+    public void clearTokenCookie(HttpServletResponse response, TokenType tokenType) {
+        String cookieName = (tokenType == TokenType.ACCESS) ? "accessToken" : "refreshToken";
+        Cookie cookie = new Cookie(cookieName, null);
         cookie.setHttpOnly(true);
         cookie.setMaxAge(0);
         cookie.setPath("/api");

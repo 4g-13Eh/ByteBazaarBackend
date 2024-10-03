@@ -6,8 +6,11 @@ import ByteBazaar.ByteBazaarBackend.exception.InvalidEmailOrPasswordException;
 import ByteBazaar.ByteBazaarBackend.exception.UserAlreadyExistsException;
 import ByteBazaar.ByteBazaarBackend.exception.UserNotFoundException;
 import ByteBazaar.ByteBazaarBackend.repository.UserRepository;
+import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
+import ByteBazaar.ByteBazaarBackend.security.service.impl.MyUserDetailsService;
 import ByteBazaar.ByteBazaarBackend.service.ShoppingCartService;
 import ByteBazaar.ByteBazaarBackend.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -22,6 +25,8 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final ShoppingCartService shoppingCartService;
+    private final JwtService jwtService;
+    private MyUserDetailsService myUserDetailsService;
 
     @Override
     public UserEntity createUser(String email, String passwordHash, String confirmedPassword){
@@ -59,4 +64,18 @@ public class UserServiceImpl implements UserService {
     public List<UserEntity> getAllUsers(){
         return userRepository.findAll();
     }
+
+    @Override
+    public UserEntity getCurrentUser(HttpServletRequest request){
+        String accessToken = jwtService.getTokenFromRequest(request);
+
+        if (accessToken != null && jwtService.isTokenValid(accessToken)){
+            String email = jwtService.extractUsername(accessToken);
+            UserEntity user = getUserByEmail(email);
+            return user;
+        }
+
+        return null;
+    }
+
 }

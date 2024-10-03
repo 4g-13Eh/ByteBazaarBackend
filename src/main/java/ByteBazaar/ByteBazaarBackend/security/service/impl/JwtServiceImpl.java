@@ -12,6 +12,8 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -31,6 +33,7 @@ public class JwtServiceImpl implements JwtService {
     @Value("${application.security.jwt.refresh.expiration}")
     private long refreshTokenExpiration;
     private final TokenRepository tokenRepository;
+    private final MyUserDetailsService myUserDetailsService;
 
     @Override
     public String extractUsername(String token) {
@@ -43,9 +46,11 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public boolean isTokenValid(String token, UserDetails userDetails) {
+    public boolean isTokenValid(String token) {
         final String userName = extractUsername(token);
         boolean isExpired = isTokenExpired(token);
+
+        UserDetails userDetails = myUserDetailsService.loadUserByUsername(userName);
         TokenEntity tokenEntity = tokenRepository.findByToken(token).orElseThrow(TokenNotFoundException::new);
 
         if (isExpired) {
@@ -70,11 +75,24 @@ public class JwtServiceImpl implements JwtService {
     }
 
     @Override
-    public void updateRefreshToken(UserEntity user, String oldRefreshToken, String newRefreshToken) {
-        TokenEntity tokenEntity = tokenRepository.findByToken(oldRefreshToken).orElseThrow(TokenNotFoundException::new);
-        tokenEntity.setRevoked(true);
-        tokenRepository.save(tokenEntity);
-        saveToken(user, newRefreshToken, TokenType.REFRESH);
+    public String getTokenFromRequest(HttpServletRequest request){
+        if (request.getCookies() != null) {
+            for (Cookie cookie : request.getCookies()){
+                if ("accessToken".equals(cookie.getName())){
+                    return cookie.getValue();
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isAuthenticated(HttpServletRequest request) {
+        String token = getTokenFromRequest(request);
+        if (token != null && isTokenValid(token)) {
+            return  true;
+        }
+        return false;
     }
 
 
