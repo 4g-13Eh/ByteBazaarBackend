@@ -23,16 +23,15 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class AuthenticationServiceImpl implements AuthenticationService {
-    private final UserService userService;
     private final UserRepository userRepository;
-    private final JwtService jwtService;
-    private final AuthenticationManager authenticationManager;
     private final TokenRepository tokenRepository;
+    private final AuthenticationManager authenticationManager;
+    private final UserService userService;
+    private final JwtService jwtService;
     private final CookieService cookieService;
 
     @Override

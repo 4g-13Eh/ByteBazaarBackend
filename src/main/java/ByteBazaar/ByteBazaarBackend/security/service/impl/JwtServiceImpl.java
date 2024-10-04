@@ -89,12 +89,8 @@ public class JwtServiceImpl implements JwtService {
     @Override
     public boolean isAuthenticated(HttpServletRequest request) {
         String token = getTokenFromRequest(request);
-        if (token != null && isTokenValid(token)) {
-            return  true;
-        }
-        return false;
+        return token != null && isTokenValid(token);
     }
-
 
     private <T> T extractClaim(String token, Function<Claims, T> claimsResolver){
         final Claims claims = extractAllClaims(token);

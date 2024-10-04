@@ -1,7 +1,5 @@
 package ByteBazaar.ByteBazaarBackend.security.config;
 
-import ByteBazaar.ByteBazaarBackend.repository.TokenRepository;
-import ByteBazaar.ByteBazaarBackend.security.service.CookieService;
 import ByteBazaar.ByteBazaarBackend.security.service.JwtService;
 import ByteBazaar.ByteBazaarBackend.security.service.impl.MyUserDetailsService;
 import io.jsonwebtoken.ExpiredJwtException;
@@ -29,8 +27,6 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private final JwtService jwtService;
     private final MyUserDetailsService myUserDetailsService;
-    private final TokenRepository tokenRepository;
-    private final CookieService cookieService;
 
     @Override
     protected void doFilterInternal(
@@ -38,7 +34,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             @NonNull HttpServletResponse response,
             @NonNull FilterChain filterChain
     ) throws ServletException, IOException {
-        System.out.println("Entering filtercahin");
+        System.out.println("Entering filter chain");
 
         String jwt = jwtService.getTokenFromRequest(request);
 

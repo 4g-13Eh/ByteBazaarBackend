@@ -18,8 +18,8 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class ItemsServiceImpl implements ItemService {
-    private final CategoryService categoryService;
     private final ItemRepository itemRepository;
+    private final CategoryService categoryService;
 
     @Override
     public List<ItemEntity> getAllItems(){

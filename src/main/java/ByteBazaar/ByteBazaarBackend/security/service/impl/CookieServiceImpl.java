@@ -14,11 +14,7 @@ public class CookieServiceImpl implements CookieService {
         String cookieName = (tokenType == TokenType.ACCESS) ? "accessToken" : "refreshToken";
         Cookie cookie = new Cookie(cookieName, token);
         cookie.setHttpOnly(true);
-        if (tokenType == TokenType.REFRESH){
-            cookie.setMaxAge(300); // One week
-        } else if (tokenType == TokenType.ACCESS) {
-            cookie.setMaxAge(180); // One day
-        }
+        cookie.setMaxAge(tokenType == TokenType.ACCESS ? 180 : 300);
         cookie.setPath("/api");
         cookie.setSecure(true);
         response.addCookie(cookie);
