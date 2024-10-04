@@ -106,7 +106,7 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             String username = jwtService.extractUsername(refreshToken);
             UserEntity user = userRepository.findByEmail(username).orElseThrow(UserNotFoundException::new);
 
-            revokeAllValidAccessTokens(user.getUserId());
+            setTokensToExpired(user.getUserId());
             this.cookieService.clearTokenCookie(response, TokenType.ACCESS);
 
             String newAccessToken = jwtService.generateToken(user, TokenType.ACCESS);
@@ -124,9 +124,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         revokeTokens(validTokens);
     }
 
-    private void revokeAllValidAccessTokens(String userId) {
+    private void setTokensToExpired(String userId) {
         List<TokenEntity> validAccessTokens = tokenRepository.findAllValidAccessTokensByUser(userId);
-        revokeTokens(validAccessTokens);
+        expireTokens(validAccessTokens);
     }
 
     private void revokeTokens(List<TokenEntity> tokens) {
@@ -137,4 +137,14 @@ public class AuthenticationServiceImpl implements AuthenticationService {
             });
         }
     }
+
+    private void expireTokens(List<TokenEntity> tokens) {
+        if (!tokens.isEmpty()) {
+            tokens.forEach(token -> {
+                token.setExpired(true);
+                tokenRepository.save(token);
+            });
+        }
+    }
+
 }
