@@ -46,138 +46,6 @@
 					"response": []
 				},
 				{
-					"name": "second signin",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\", function () {\r",
-									"  pm.expect(pm.response.code).to.equal(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response has the required fields\", function () {\r",
-									"  const responseData = pm.response.json();\r",
-									"  \r",
-									"  pm.expect(responseData).to.be.an('object');\r",
-									"  pm.expect(responseData.token).to.exist;\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Token is a non-empty string\", function () {\r",
-									"  const responseData = pm.response.json();\r",
-									"  \r",
-									"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
-									"});\r",
-									"\r",
-									"\r",
-									"const responseData = pm.response.json();\r",
-									"pm.collectionVariables.set(\"token\", responseData.token);\r",
-									"\r",
-									"setTimeout(()=> {pm.execution.setNextRequest(\"expired jwt\")}, 180000);\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"real@edging.com\",\r\n    \"password\": \"Erm...What_the_Sigma?!\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{path}}/auth/signin"
-					},
-					"response": []
-				},
-				{
-					"name": "third signin",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\", function () {\r",
-									"  pm.expect(pm.response.code).to.equal(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response has the required fields\", function () {\r",
-									"  const responseData = pm.response.json();\r",
-									"  \r",
-									"  pm.expect(responseData).to.be.an('object');\r",
-									"  pm.expect(responseData.token).to.exist;\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Token is a non-empty string\", function () {\r",
-									"  const responseData = pm.response.json();\r",
-									"  \r",
-									"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
-									"});\r",
-									"\r",
-									"\r",
-									"const responseData = pm.response.json();\r",
-									"pm.collectionVariables.set(\"token\", responseData.token);\r",
-									"\r",
-									"pm.execution.setNextRequest(\"logout\")\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"real@edging.com\",\r\n    \"password\": \"Erm...What_the_Sigma?!\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
-						},
-						"url": "{{path}}/auth/signin"
-					},
-					"response": []
-				},
-				{
 					"name": "fourth signin",
 					"event": [
 						{
@@ -205,11 +73,7 @@
 									"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
 									"});\r",
 									"\r",
-									"\r",
-									"const responseData = pm.response.json();\r",
-									"pm.collectionVariables.set(\"token\", responseData.token);\r",
-									"\r",
-									"setTimeout(()=>{pm.execution.setNextRequest(\"refresh\")}, 25000);\r",
+									"setTimeout(()=>{pm.execution.setNextRequest(\"refresh\")}, 180000);\r",
 									""
 								],
 								"type": "text/javascript",
@@ -284,69 +148,6 @@
 									"});\r",
 									"\r",
 									"\r",
-									"pm.execution.setNextRequest(\"fifth signin\");\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{token}}"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{path}}/users"
-					},
-					"response": []
-				},
-				{
-					"name": "fifth signin",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 200\", function () {\r",
-									"  pm.expect(pm.response.code).to.equal(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response time is less than 200ms\", function () {\r",
-									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response has the required fields\", function () {\r",
-									"  const responseData = pm.response.json();\r",
-									"  \r",
-									"  pm.expect(responseData).to.be.an('object');\r",
-									"  pm.expect(responseData.token).to.exist;\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Token is a non-empty string\", function () {\r",
-									"  const responseData = pm.response.json();\r",
-									"  \r",
-									"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
-									"});\r",
-									"\r",
-									"\r",
-									"const responseData = pm.response.json();\r",
-									"pm.collectionVariables.set(\"token\", responseData.token);\r",
-									"\r",
 									"pm.execution.setNextRequest(\"get all items utility\");\r",
 									""
 								],
@@ -366,18 +167,12 @@
 						}
 					],
 					"request": {
-						"method": "POST",
-						"header": [],
-						"body": {
-							"mode": "raw",
-							"raw": "{\r\n    \"email\": \"real@edging.com\",\r\n    \"password\": \"Erm...What_the_Sigma?!\"\r\n}",
-							"options": {
-								"raw": {
-									"language": "json"
-								}
-							}
+						"auth": {
+							"type": "noauth"
 						},
-						"url": "{{path}}/auth/signin"
+						"method": "GET",
+						"header": [],
+						"url": "{{path}}/users"
 					},
 					"response": []
 				},
@@ -473,6 +268,238 @@
 						"url": "{{path}}/items"
 					},
 					"response": []
+				},
+				{
+					"name": "utility logout 1",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.execution.setNextRequest(\"signin\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{path}}/auth/logout"
+					},
+					"response": []
+				},
+				{
+					"name": "utility logout 2",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.execution.setNextRequest(\"invalid signup\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{path}}/auth/logout"
+					},
+					"response": []
+				},
+				{
+					"name": "sixth signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.token).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
+									"});\r",
+									"\r",
+									"pm.execution.setNextRequest(\"invalid userId\");\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"real@edging.com\",\r\n    \"password\": \"Erm...What_the_Sigma?!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{path}}/auth/signin"
+					},
+					"response": []
+				},
+				{
+					"name": "seventh signin",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Response status code is 200\", function () {\r",
+									"  pm.expect(pm.response.code).to.equal(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response time is less than 200ms\", function () {\r",
+									"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Response has the required fields\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData).to.be.an('object');\r",
+									"  pm.expect(responseData.token).to.exist;\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Token is a non-empty string\", function () {\r",
+									"  const responseData = pm.response.json();\r",
+									"  \r",
+									"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
+									"});\r",
+									"\r",
+									"\r",
+									"pm.execution.setNextRequest(\"invalid itemId\");\r",
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"email\": \"real@edging.com\",\r\n    \"password\": \"Erm...What_the_Sigma?!\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": "{{path}}/auth/signin"
+					},
+					"response": []
+				},
+				{
+					"name": "utility logout 3",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.execution.setNextRequest(\"no auth\");"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						},
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{path}}/auth/logout"
+					},
+					"response": []
+				},
+				{
+					"name": "cleanup",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.collectionVariables.clear();\r",
+									"pm.collectionVariables.set(\"path\", \"localhost:8080/api\")\r",
+									"\r",
+									"pm.execution.setNextRequest(null);"
+								],
+								"type": "text/javascript",
+								"packages": {}
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": "{{path}}/auth/logout"
+					},
+					"response": []
 				}
 			],
 			"description": "folder with a request that serves as a warmup for the db / backend"
@@ -512,7 +539,7 @@
 											"});\r",
 											"\r",
 											"\r",
-											"pm.execution.setNextRequest(\"signin\");\r",
+											"pm.execution.setNextRequest(\"utility logout 1\");\r",
 											""
 										],
 										"type": "text/javascript",
@@ -573,10 +600,6 @@
 											"  \r",
 											"  pm.expect(responseData.token).to.be.a('string').and.to.have.lengthOf.at.least(1, \"Token should not be empty\");\r",
 											"});\r",
-											"\r",
-											"\r",
-											"const responseData = pm.response.json();\r",
-											"pm.collectionVariables.set(\"token\", responseData.token);\r",
 											"\r",
 											"pm.execution.setNextRequest(\"get all users\");\r",
 											""
@@ -876,7 +899,7 @@
 											"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
 											"});\r",
 											"\r",
-											"pm.execution.setNextRequest(\"invalid userId\");\r",
+											"pm.execution.setNextRequest(\"sixth signin\");\r",
 											""
 										],
 										"type": "text/javascript",
@@ -976,10 +999,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "GET",
 								"header": [],
@@ -1053,10 +1073,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "GET",
 								"header": [],
@@ -1140,7 +1157,7 @@
 											"  pm.expect(pm.response.responseTime).to.be.below(500);\r",
 											"});\r",
 											"\r",
-											"pm.execution.setNextRequest(\"no auth\");\r",
+											"pm.execution.setNextRequest(\"utility logout 3\");\r",
 											""
 										],
 										"type": "text/javascript",
@@ -1160,10 +1177,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "GET",
 								"header": [],
@@ -1187,7 +1201,17 @@
 											"  pm.expect(pm.response.responseTime).to.be.below(200);\r",
 											"});\r",
 											"\r",
-											"pm.execution.setNextRequest(null)"
+											"pm.execution.setNextRequest(\"cleanup\")"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								},
+								{
+									"listen": "prerequest",
+									"script": {
+										"exec": [
+											""
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -1291,10 +1315,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "GET",
 								"header": [],
@@ -1384,10 +1405,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "GET",
 								"header": [],
@@ -1471,10 +1489,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "POST",
 								"header": [],
@@ -1514,7 +1529,7 @@
 											"    pm.expect(responseData).to.be.an('number');\r",
 											"});\r",
 											"\r",
-											"pm.execution.setNextRequest()"
+											"pm.execution.setNextRequest(\"decrease item stock\");"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -1523,8 +1538,11 @@
 								{
 									"listen": "prerequest",
 									"script": {
-										"exec": [],
-										"type": "text/javascript"
+										"exec": [
+											""
+										],
+										"type": "text/javascript",
+										"packages": {}
 									}
 								}
 							],
@@ -1748,10 +1766,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "GET",
 								"header": [],
@@ -1800,10 +1815,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "POST",
 								"header": [],
@@ -2051,10 +2063,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "GET",
 								"header": [],
@@ -2097,10 +2106,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "PUT",
 								"header": [],
@@ -2154,10 +2160,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "PUT",
 								"header": [],
@@ -2203,7 +2206,7 @@
 											"    pm.expect(responseData).to.be.null;\r",
 											"});\r",
 											"\r",
-											"pm.execution.setNextRequest(\"invalid signup\");\r",
+											"pm.execution.setNextRequest(\"utility logout 2\");\r",
 											""
 										],
 										"type": "text/javascript",
@@ -2223,10 +2226,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "DELETE",
 								"header": [],
@@ -2307,10 +2307,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "GET",
 								"header": [],
@@ -2348,7 +2345,7 @@
 											"pm.collectionVariables.unset(\"item\");\r",
 											"pm.collectionVariables.unset(\"itemId\");\r",
 											"\r",
-											"pm.execution.setNextRequest(\"empty bearer token\");"
+											"pm.execution.setNextRequest(\"logout\");"
 										],
 										"type": "text/javascript",
 										"packages": {}
@@ -2367,10 +2364,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "DELETE",
 								"header": [],
@@ -2420,10 +2414,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "GET",
 								"header": [],
@@ -2477,10 +2468,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "PUT",
 								"header": [],
@@ -2539,10 +2527,7 @@
 							],
 							"request": {
 								"auth": {
-									"type": "bearer",
-									"bearer": {
-										"token": "{{token}}"
-									}
+									"type": "noauth"
 								},
 								"method": "PUT",
 								"header": [],
@@ -2567,108 +2552,6 @@
 			"name": "invalid jwt",
 			"item": [
 				{
-					"name": "expired jwt",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 401\", function () {\r",
-									"    pm.expect(pm.response.code).to.equal(401);\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response time is within an acceptable range\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response body contains 'JWT expired'\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"JWT expired\");\r",
-									"});\r",
-									"\r",
-									"pm.execution.setNextRequest(\"third signin\");"
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{token}}"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{path}}/items"
-					},
-					"response": []
-				},
-				{
-					"name": "empty bearer token",
-					"event": [
-						{
-							"listen": "test",
-							"script": {
-								"exec": [
-									"pm.test(\"Response status code is 401\", function () {\r",
-									"    pm.expect(pm.response.code).to.equal(401);\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.test(\"Response time is within an acceptable range\", function () {\r",
-									"    pm.expect(pm.response.responseTime).to.be.below(200);\r",
-									"});\r",
-									"\r",
-									"pm.test(\"Response body contains 'JWT strings must contain exactly 2 period'\", function () {\r",
-									"    pm.expect(pm.response.text()).to.include(\"JWT strings must contain exactly 2 period\");\r",
-									"});\r",
-									"\r",
-									"\r",
-									"pm.execution.setNextRequest(\"second signin\");\r",
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						},
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript",
-								"packages": {}
-							}
-						}
-					],
-					"request": {
-						"auth": {
-							"type": "bearer",
-							"bearer": {
-								"token": "{{token}}"
-							}
-						},
-						"method": "GET",
-						"header": [],
-						"url": "{{path}}/items"
-					},
-					"response": []
-				},
-				{
 					"name": "no auth",
 					"event": [
 						{
@@ -2684,7 +2567,7 @@
 									"  pm.expect(pm.response.responseTime).to.be.below(1000);\r",
 									"});\r",
 									"\r",
-									"pm.execution.setNextRequest(\"invalid itemId\");\r",
+									"pm.execution.setNextRequest(\"seventh signin\");\r",
 									""
 								],
 								"type": "text/javascript",
@@ -2743,18 +2626,6 @@
 			"key": "path",
 			"value": "localhost:8080/api",
 			"type": "string"
-		},
-		{
-			"key": "token",
-			"value": ""
-		},
-		{
-			"key": "itemId",
-			"value": ""
-		},
-		{
-			"key": "useremail",
-			"value": ""
 		}
 	]
 }

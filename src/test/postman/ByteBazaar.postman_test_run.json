@@ -1,22 +1,22 @@
 {
-	"id": "2607f905-c2a1-4a3b-b2b3-3879d6d9b269",
+	"id": "f67ce8e7-4f8b-45fe-b907-c4869074dae1",
 	"name": "ByteBazaar",
-	"timestamp": "2024-09-30T09:36:37.710Z",
+	"timestamp": "2024-10-04T09:00:29.176Z",
 	"collection_id": "26136977-76e393c0-a5e2-458a-b375-05daf79512b9",
 	"folder_id": 0,
 	"environment_id": "0",
-	"totalPass": 141,
+	"totalPass": 130,
 	"delay": 0,
 	"persist": true,
 	"status": "finished",
-	"startedAt": "2024-09-30T09:32:57.567Z",
-	"totalFail": 0,
+	"startedAt": "2024-10-04T08:57:13.700Z",
+	"totalFail": 1,
 	"results": [
 		{
 			"id": "6b4623d1-7c86-4990-9f8e-fc1b103ee7d7",
 			"name": "system warmup",
 			"url": "localhost:8080/v3/api-docs",
-			"time": 9,
+			"time": 10,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -24,7 +24,7 @@
 			"tests": {},
 			"testPassFailCounts": {},
 			"times": [
-				9
+				10
 			],
 			"allTests": [
 				{}
@@ -34,7 +34,7 @@
 			"id": "3f3c81a3-6553-4d3e-94a8-c8433722f5eb",
 			"name": "signup",
 			"url": "localhost:8080/api/auth/signup",
-			"time": 91,
+			"time": 87,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -64,7 +64,7 @@
 				}
 			},
 			"times": [
-				91
+				87
 			],
 			"allTests": [
 				{
@@ -76,10 +76,28 @@
 			]
 		},
 		{
+			"id": "5ae4b145-a269-45da-b7ac-f3b5dfc7b3f9",
+			"name": "utility logout 1",
+			"url": "localhost:8080/api/auth/logout",
+			"time": 18,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				18
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
 			"id": "7ca2874c-7927-4807-9a11-615f0816bc0e",
 			"name": "signin",
 			"url": "localhost:8080/api/auth/signin",
-			"time": 97,
+			"time": 84,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -109,7 +127,7 @@
 				}
 			},
 			"times": [
-				97
+				84
 			],
 			"allTests": [
 				{
@@ -123,1176 +141,6 @@
 		{
 			"id": "2c22db90-2206-4a91-8a2d-a2435f6c410a",
 			"name": "get all users",
-			"url": "localhost:8080/api/users",
-			"time": 16,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Response status code is 200": true,
-				"Response time is within acceptable range": true,
-				"Response has the required fields": true,
-				"Email is in a valid format": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is within acceptable range": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response has the required fields": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Email is in a valid format": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				16
-			],
-			"allTests": [
-				{
-					"Response status code is 200": true,
-					"Response time is within acceptable range": true,
-					"Response has the required fields": true,
-					"Email is in a valid format": true
-				}
-			]
-		},
-		{
-			"id": "e9a423e5-3b9c-41b3-a713-c2886771fc87",
-			"name": "get user by Id",
-			"url": "localhost:8080/api/users/fdcf6026-96c7-4676-bb7b-7e6e6713842f",
-			"time": 20,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Response status code is 200": true,
-				"Response time is less than 200ms": true,
-				"Response has the required fields": true,
-				"Email is in a valid format": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response has the required fields": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Email is in a valid format": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				20
-			],
-			"allTests": [
-				{
-					"Response status code is 200": true,
-					"Response time is less than 200ms": true,
-					"Response has the required fields": true,
-					"Email is in a valid format": true
-				}
-			]
-		},
-		{
-			"id": "05b4ea7a-bdf4-42dd-8541-f91d470e5a3b",
-			"name": "get all items",
-			"url": "localhost:8080/api/items",
-			"time": 42,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Response status code is 200": true,
-				"Response time is less than 200ms": true,
-				"Response has the required fields": true,
-				"Categories array is present and contains expected number of elements": true,
-				"Category name must be a non-empty string": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response has the required fields": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Categories array is present and contains expected number of elements": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Category name must be a non-empty string": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				42
-			],
-			"allTests": [
-				{
-					"Response status code is 200": true,
-					"Response time is less than 200ms": true,
-					"Response has the required fields": true,
-					"Categories array is present and contains expected number of elements": true,
-					"Category name must be a non-empty string": true
-				}
-			]
-		},
-		{
-			"id": "b839c308-dfa3-40aa-8a02-1815d2046041",
-			"name": "get item by Id",
-			"url": "localhost:8080/api/items/01fd8574-da95-4549-8c23-79212d909ca6",
-			"time": 22,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Response status code is 200": true,
-				"Response time is less than 200ms": true,
-				"Response has the required fields": true,
-				"Price is a non-negative number": true,
-				"Categories array is present and contains expected number of elements": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response has the required fields": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Price is a non-negative number": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Categories array is present and contains expected number of elements": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				22
-			],
-			"allTests": [
-				{
-					"Response status code is 200": true,
-					"Response time is less than 200ms": true,
-					"Response has the required fields": true,
-					"Price is a non-negative number": true,
-					"Categories array is present and contains expected number of elements": true
-				}
-			]
-		},
-		{
-			"id": "62495f8d-0d98-44c9-baab-8f68fcc164e4",
-			"name": "get item by categories",
-			"url": "localhost:8080/api/items",
-			"time": 84,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Response status code is 200": true,
-				"Response time is less than 200ms": true,
-				"Content-Type is application/json": true,
-				"Response has the required fields": true,
-				"Categories array is present and contains expected number of elements": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Content-Type is application/json": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response has the required fields": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Categories array is present and contains expected number of elements": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				84
-			],
-			"allTests": [
-				{
-					"Response status code is 200": true,
-					"Response time is less than 200ms": true,
-					"Content-Type is application/json": true,
-					"Response has the required fields": true,
-					"Categories array is present and contains expected number of elements": true
-				}
-			]
-		},
-		{
-			"id": "68a8a92e-0a14-426a-80d1-122471c4ffe2",
-			"name": "add item to cart",
-			"url": "localhost:8080/api/carts/3abd2108-7346-480b-8f7a-75c9e48ab867",
-			"time": 30,
-			"responseCode": {
-				"code": 204,
-				"name": "No Content"
-			},
-			"tests": {
-				"Response status code is 204": true,
-				"Response time is less than 200ms": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 204": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				30
-			],
-			"allTests": [
-				{
-					"Response status code is 204": true,
-					"Response time is less than 200ms": true
-				}
-			]
-		},
-		{
-			"id": "57f8c652-b9d2-4cb8-a971-79859f2152e3",
-			"name": "get total quantity",
-			"url": "localhost:8080/api/carts/quantity/3abd2108-7346-480b-8f7a-75c9e48ab867",
-			"time": 17,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Response status code is 200": true,
-				"Response time is less than 200ms": true,
-				"Response has a valid JSON schema": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response has a valid JSON schema": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				17
-			],
-			"allTests": [
-				{
-					"Response status code is 200": true,
-					"Response time is less than 200ms": true,
-					"Response has a valid JSON schema": true
-				}
-			]
-		},
-		{
-			"id": "39fbf343-1f19-44d5-8451-963f5133c6d2",
-			"name": "update quantity",
-			"url": "localhost:8080/api/carts/quantity/3abd2108-7346-480b-8f7a-75c9e48ab867/01fd8574-da95-4549-8c23-79212d909ca6",
-			"time": 38,
-			"responseCode": {
-				"code": 204,
-				"name": "No Content"
-			},
-			"tests": {
-				"Response status code is 204": true,
-				"Response body is null": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 204": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body is null": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				38
-			],
-			"allTests": [
-				{
-					"Response status code is 204": true,
-					"Response body is null": true
-				}
-			]
-		},
-		{
-			"id": "572fb1af-0bfa-4f69-98e3-d2a3d37a6b2d",
-			"name": "get cartitems",
-			"url": "localhost:8080/api/carts/3abd2108-7346-480b-8f7a-75c9e48ab867",
-			"time": 20,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Response status code is 200": true,
-				"Response time is within acceptable range": true,
-				"Response body has the required fields": true,
-				"Validate the schema of cartItem": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is within acceptable range": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body has the required fields": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Validate the schema of cartItem": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				20
-			],
-			"allTests": [
-				{
-					"Response status code is 200": true,
-					"Response time is within acceptable range": true,
-					"Response body has the required fields": true,
-					"Validate the schema of cartItem": true
-				}
-			]
-		},
-		{
-			"id": "c574f223-8340-426a-ac5c-43c2e3a1d8b7",
-			"name": "remove item",
-			"url": "localhost:8080/api/carts/3abd2108-7346-480b-8f7a-75c9e48ab867/01fd8574-da95-4549-8c23-79212d909ca6",
-			"time": 24,
-			"responseCode": {
-				"code": 204,
-				"name": "No Content"
-			},
-			"tests": {
-				"Response status code is 204": true,
-				"Response time is less than 200ms": true,
-				"Response body schema is validated against the expected schema for a successful deletion": true,
-				"Response body is null": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 204": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body schema is validated against the expected schema for a successful deletion": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body is null": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				24
-			],
-			"allTests": [
-				{
-					"Response status code is 204": true,
-					"Response time is less than 200ms": true,
-					"Response body schema is validated against the expected schema for a successful deletion": true,
-					"Response body is null": true
-				}
-			]
-		},
-		{
-			"id": "cf286685-905f-4c20-9aa2-f58d1e77d52d",
-			"name": "invalid signup",
-			"url": "localhost:8080/api/auth/signup",
-			"time": 5,
-			"responseCode": {
-				"code": 400,
-				"name": "Bad Request"
-			},
-			"tests": {
-				"Response status code is 400": true,
-				"Response body contains the message 'Password must be at least'": true,
-				"Response time is less than 200ms": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 400": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body contains the message 'Password must be at least'": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				5
-			],
-			"allTests": [
-				{
-					"Response status code is 400": true,
-					"Response body contains the message 'Password must be at least'": true,
-					"Response time is less than 200ms": true
-				}
-			]
-		},
-		{
-			"id": "634318d4-91b4-40f2-a558-a6eed3e3de70",
-			"name": "invalid signin",
-			"url": "localhost:8080/api/auth/signin",
-			"time": 8,
-			"responseCode": {
-				"code": 401,
-				"name": "Unauthorized"
-			},
-			"tests": {
-				"Response status code is 401": true,
-				"Response Content-Type is text/plain": true,
-				"Response includes the error message 'An unexpected error occurred: Bad credentials'": true,
-				"Response time is less than 200ms": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 401": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response Content-Type is text/plain": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response includes the error message 'An unexpected error occurred: Bad credentials'": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				8
-			],
-			"allTests": [
-				{
-					"Response status code is 401": true,
-					"Response Content-Type is text/plain": true,
-					"Response includes the error message 'An unexpected error occurred: Bad credentials'": true,
-					"Response time is less than 200ms": true
-				}
-			]
-		},
-		{
-			"id": "74878a6c-0d08-4bb6-859c-b450a2259356",
-			"name": "invalid email",
-			"url": "localhost:8080/api/auth/signup",
-			"time": 6,
-			"responseCode": {
-				"code": 400,
-				"name": "Bad Request"
-			},
-			"tests": {
-				"Response status code is 400": true,
-				"Response Content-Type is application/json": true,
-				"Response body contains the message 'Email must have valid format'": true,
-				"Response time is less than 200ms": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 400": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response Content-Type is application/json": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body contains the message 'Email must have valid format'": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				6
-			],
-			"allTests": [
-				{
-					"Response status code is 400": true,
-					"Response Content-Type is application/json": true,
-					"Response body contains the message 'Email must have valid format'": true,
-					"Response time is less than 200ms": true
-				}
-			]
-		},
-		{
-			"id": "b3714dbe-9d94-4318-9d5b-079fcb8d4411",
-			"name": "invalid userId",
-			"url": "localhost:8080/api/users/803233snfjsnouiwfsj92",
-			"time": 16,
-			"responseCode": {
-				"code": 404,
-				"name": "Not Found"
-			},
-			"tests": {
-				"Response status code is 404": true,
-				"Response time is within an acceptable range": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 404": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is within an acceptable range": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				16
-			],
-			"allTests": [
-				{
-					"Response status code is 404": true,
-					"Response time is within an acceptable range": true
-				}
-			]
-		},
-		{
-			"id": "409c31dc-3349-4f24-ab97-2cba4b783ce6",
-			"name": "no auth",
-			"url": "localhost:8080/api/users",
-			"time": 3,
-			"responseCode": {
-				"code": 401,
-				"name": "Unauthorized"
-			},
-			"tests": {
-				"Response status code is 401": true,
-				"Response time is in an acceptable range": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 401": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is in an acceptable range": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				3
-			],
-			"allTests": [
-				{
-					"Response status code is 401": true,
-					"Response time is in an acceptable range": true
-				}
-			]
-		},
-		{
-			"id": "23c40d44-6717-4377-bb1e-7c576e1bbeed",
-			"name": "invalid itemId",
-			"url": "localhost:8080/api/items/87317jkah793",
-			"time": 17,
-			"responseCode": {
-				"code": 404,
-				"name": "Not Found"
-			},
-			"tests": {
-				"Response status code is 404": true,
-				"Response Content-Type is text/plain": true,
-				"Response time is less than 200ms": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 404": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response Content-Type is text/plain": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				17
-			],
-			"allTests": [
-				{
-					"Response status code is 404": true,
-					"Response Content-Type is text/plain": true,
-					"Response time is less than 200ms": true
-				}
-			]
-		},
-		{
-			"id": "5a9e17c7-322c-4aa4-a826-e4a10e98ab13",
-			"name": "invalid category",
-			"url": "localhost:8080/api/items",
-			"time": 29,
-			"responseCode": {
-				"code": 204,
-				"name": "No Content"
-			},
-			"tests": {
-				"Response status code is 204": true,
-				"Response time is less than 200ms": true,
-				"Response body is null": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 204": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body is null": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				29
-			],
-			"allTests": [
-				{
-					"Response status code is 204": true,
-					"Response time is less than 200ms": true,
-					"Response body is null": true
-				}
-			]
-		},
-		{
-			"id": "88fd1690-eb82-4c11-b52f-f1f1a96aa9b6",
-			"name": "invalid cartid",
-			"url": "localhost:8080/api/carts/quantity/tghb654r",
-			"time": 15,
-			"responseCode": {
-				"code": 404,
-				"name": "Not Found"
-			},
-			"tests": {
-				"Response status code is 404": true,
-				"Response time is less than 200ms": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 404": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				15
-			],
-			"allTests": [
-				{
-					"Response status code is 404": true,
-					"Response time is less than 200ms": true
-				}
-			]
-		},
-		{
-			"id": "52b2ee47-0bcd-4118-9b5c-73ae586b80b2",
-			"name": "invalid itemId update",
-			"url": "localhost:8080/api/carts/3abd2108-7346-480b-8f7a-75c9e48ab867",
-			"time": 21,
-			"responseCode": {
-				"code": 404,
-				"name": "Not Found"
-			},
-			"tests": {
-				"Response status code is 404": true,
-				"Response content type is text/plain": true,
-				"Response body contains 'Item not found'": true,
-				"Response time is within an acceptable range": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 404": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response content type is text/plain": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body contains 'Item not found'": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is within an acceptable range": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				21
-			],
-			"allTests": [
-				{
-					"Response status code is 404": true,
-					"Response content type is text/plain": true,
-					"Response body contains 'Item not found'": true,
-					"Response time is within an acceptable range": true
-				}
-			]
-		},
-		{
-			"id": "01590e86-e222-46c4-a602-36c24435ec1f",
-			"name": "invalid quantity",
-			"url": "localhost:8080/api/carts/quantity/3abd2108-7346-480b-8f7a-75c9e48ab867/01fd8574-da95-4549-8c23-79212d909ca6",
-			"time": 12,
-			"responseCode": {
-				"code": 400,
-				"name": "Bad Request"
-			},
-			"tests": {
-				"Response status code is 400": true,
-				"Response time is within an acceptable range": true,
-				"Verify that the response contains an error message": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 400": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is within an acceptable range": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Verify that the response contains an error message": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				12
-			],
-			"allTests": [
-				{
-					"Response status code is 400": true,
-					"Response time is within an acceptable range": true,
-					"Verify that the response contains an error message": true
-				}
-			]
-		},
-		{
-			"id": "4a2c5605-f9e9-481b-b875-cf97aa5c1d97",
-			"name": "clear cart",
-			"url": "localhost:8080/api/carts/3abd2108-7346-480b-8f7a-75c9e48ab867",
-			"time": 20,
-			"responseCode": {
-				"code": 204,
-				"name": "No Content"
-			},
-			"tests": {
-				"Response status code is 204": true,
-				"Response time is within an acceptable range": true,
-				"Response body is null": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 204": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is within an acceptable range": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body is null": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				20
-			],
-			"allTests": [
-				{
-					"Response status code is 204": true,
-					"Response time is within an acceptable range": true,
-					"Response body is null": true
-				}
-			]
-		},
-		{
-			"id": "5026df5e-b212-4159-9de0-dcbb161b8fe5",
-			"name": "empty bearer token",
-			"url": "localhost:8080/api/items",
-			"time": 5,
-			"responseCode": {
-				"code": 401,
-				"name": "Unauthorized"
-			},
-			"tests": {
-				"Response status code is 401": true,
-				"Response time is within an acceptable range": true,
-				"Response body contains 'JWT strings must contain exactly 2 period'": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 401": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is within an acceptable range": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body contains 'JWT strings must contain exactly 2 period'": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				5
-			],
-			"allTests": [
-				{
-					"Response status code is 401": true,
-					"Response time is within an acceptable range": true,
-					"Response body contains 'JWT strings must contain exactly 2 period'": true
-				}
-			]
-		},
-		{
-			"id": "a0ef1afd-29af-42e5-ab9d-c2dbaed51ecd",
-			"name": "second signin",
-			"url": "localhost:8080/api/auth/signin",
-			"time": 117,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Response status code is 200": true,
-				"Response time is less than 200ms": true,
-				"Response has the required fields": true,
-				"Token is a non-empty string": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response has the required fields": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Token is a non-empty string": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				117
-			],
-			"allTests": [
-				{
-					"Response status code is 200": true,
-					"Response time is less than 200ms": true,
-					"Response has the required fields": true,
-					"Token is a non-empty string": true
-				}
-			]
-		},
-		{
-			"id": "f344ee1e-493b-40fe-9e98-42899aa05cc7",
-			"name": "expired jwt",
-			"url": "localhost:8080/api/items",
-			"time": 17,
-			"responseCode": {
-				"code": 401,
-				"name": "Unauthorized"
-			},
-			"tests": {
-				"Response status code is 401": true,
-				"Response time is within an acceptable range": true,
-				"Response body contains 'JWT expired'": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 401": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is within an acceptable range": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body contains 'JWT expired'": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				17
-			],
-			"allTests": [
-				{
-					"Response status code is 401": true,
-					"Response time is within an acceptable range": true,
-					"Response body contains 'JWT expired'": true
-				}
-			]
-		},
-		{
-			"id": "d9eab9ee-d6d3-451d-9f69-f71ea98cf0fb",
-			"name": "third signin",
-			"url": "localhost:8080/api/auth/signin",
-			"time": 87,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Response status code is 200": true,
-				"Response time is less than 200ms": true,
-				"Response has the required fields": true,
-				"Token is a non-empty string": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response has the required fields": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Token is a non-empty string": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				87
-			],
-			"allTests": [
-				{
-					"Response status code is 200": true,
-					"Response time is less than 200ms": true,
-					"Response has the required fields": true,
-					"Token is a non-empty string": true
-				}
-			]
-		},
-		{
-			"id": "b03ecf20-f39e-476a-a96e-46a44dd4cea8",
-			"name": "logout",
-			"url": "localhost:8080/api/auth/logout",
-			"time": 87,
-			"responseCode": {
-				"code": 204,
-				"name": "No Content"
-			},
-			"tests": {
-				"Response status code is 204": true,
-				"Response time is within an acceptable range": true,
-				"Null value in the response": true,
-				"Response body is empty": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 204": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is within an acceptable range": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Null value in the response": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response body is empty": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				87
-			],
-			"allTests": [
-				{
-					"Response status code is 204": true,
-					"Response time is within an acceptable range": true,
-					"Null value in the response": true,
-					"Response body is empty": true
-				}
-			]
-		},
-		{
-			"id": "2db0476b-941f-47e5-929a-142ddb9de80c",
-			"name": "fourth signin",
-			"url": "localhost:8080/api/auth/signin",
-			"time": 95,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Response status code is 200": true,
-				"Response time is less than 200ms": true,
-				"Response has the required fields": true,
-				"Token is a non-empty string": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response has the required fields": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Token is a non-empty string": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				95
-			],
-			"allTests": [
-				{
-					"Response status code is 200": true,
-					"Response time is less than 200ms": true,
-					"Response has the required fields": true,
-					"Token is a non-empty string": true
-				}
-			]
-		},
-		{
-			"id": "c7356282-80f2-4342-8f6a-5943aabc3903",
-			"name": "refresh",
-			"url": "localhost:8080/api/auth/refresh",
-			"time": 35,
-			"responseCode": {
-				"code": 200,
-				"name": "OK"
-			},
-			"tests": {
-				"Response status code is 200": true,
-				"Response time is less than 200ms": true,
-				"Token field is present in the response": true,
-				"Token is a non-empty string": true
-			},
-			"testPassFailCounts": {
-				"Response status code is 200": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Response time is less than 200ms": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Token field is present in the response": {
-					"pass": 1,
-					"fail": 0
-				},
-				"Token is a non-empty string": {
-					"pass": 1,
-					"fail": 0
-				}
-			},
-			"times": [
-				35
-			],
-			"allTests": [
-				{
-					"Response status code is 200": true,
-					"Response time is less than 200ms": true,
-					"Token field is present in the response": true,
-					"Token is a non-empty string": true
-				}
-			]
-		},
-		{
-			"id": "b49b5a41-27f9-4451-a16a-a23e4fc9076c",
-			"name": "test refresh",
 			"url": "localhost:8080/api/users",
 			"time": 13,
 			"responseCode": {
@@ -1336,10 +184,550 @@
 			]
 		},
 		{
-			"id": "b19f2226-7a30-4c9c-a2d0-15156a6b7099",
-			"name": "fifth signin",
+			"id": "e9a423e5-3b9c-41b3-a713-c2886771fc87",
+			"name": "get user by Id",
+			"url": "localhost:8080/api/users/b0d16a35-7546-49bf-9976-ff509a7646a8",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response has the required fields": true,
+				"Email is in a valid format": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Email is in a valid format": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response has the required fields": true,
+					"Email is in a valid format": true
+				}
+			]
+		},
+		{
+			"id": "05b4ea7a-bdf4-42dd-8541-f91d470e5a3b",
+			"name": "get all items",
+			"url": "localhost:8080/api/items",
+			"time": 415,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response time is less than 200ms": false,
+				"Response has the required fields": true,
+				"Categories array is present and contains expected number of elements": true,
+				"Category name must be a non-empty string": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 0,
+					"fail": 1
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Categories array is present and contains expected number of elements": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Category name must be a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				415
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response time is less than 200ms": false,
+					"Response has the required fields": true,
+					"Categories array is present and contains expected number of elements": true,
+					"Category name must be a non-empty string": true
+				}
+			]
+		},
+		{
+			"id": "b839c308-dfa3-40aa-8a02-1815d2046041",
+			"name": "get item by Id",
+			"url": "localhost:8080/api/items/01fd8574-da95-4549-8c23-79212d909ca6",
+			"time": 11,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response has the required fields": true,
+				"Price is a non-negative number": true,
+				"Categories array is present and contains expected number of elements": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Price is a non-negative number": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Categories array is present and contains expected number of elements": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response has the required fields": true,
+					"Price is a non-negative number": true,
+					"Categories array is present and contains expected number of elements": true
+				}
+			]
+		},
+		{
+			"id": "62495f8d-0d98-44c9-baab-8f68fcc164e4",
+			"name": "get item by categories",
+			"url": "localhost:8080/api/items",
+			"time": 23,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Content-Type is application/json": true,
+				"Response has the required fields": true,
+				"Categories array is present and contains expected number of elements": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Content-Type is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Categories array is present and contains expected number of elements": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				23
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Content-Type is application/json": true,
+					"Response has the required fields": true,
+					"Categories array is present and contains expected number of elements": true
+				}
+			]
+		},
+		{
+			"id": "68a8a92e-0a14-426a-80d1-122471c4ffe2",
+			"name": "add item to cart",
+			"url": "localhost:8080/api/carts/3b7500e3-0dde-4336-9225-40f79e767b2d",
+			"time": 17,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Response status code is 204": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 204": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"Response status code is 204": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "57f8c652-b9d2-4cb8-a971-79859f2152e3",
+			"name": "get total quantity",
+			"url": "localhost:8080/api/carts/quantity/3b7500e3-0dde-4336-9225-40f79e767b2d",
+			"time": 14,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response has a valid JSON schema": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has a valid JSON schema": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response has a valid JSON schema": true
+				}
+			]
+		},
+		{
+			"id": "39fbf343-1f19-44d5-8451-963f5133c6d2",
+			"name": "update quantity",
+			"url": "localhost:8080/api/carts/quantity/3b7500e3-0dde-4336-9225-40f79e767b2d/01fd8574-da95-4549-8c23-79212d909ca6",
+			"time": 17,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Response status code is 204": true,
+				"Response body is null": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 204": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body is null": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				17
+			],
+			"allTests": [
+				{
+					"Response status code is 204": true,
+					"Response body is null": true
+				}
+			]
+		},
+		{
+			"id": "572fb1af-0bfa-4f69-98e3-d2a3d37a6b2d",
+			"name": "get cartitems",
+			"url": "localhost:8080/api/carts/3b7500e3-0dde-4336-9225-40f79e767b2d",
+			"time": 14,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response time is within acceptable range": true,
+				"Response body has the required fields": true,
+				"Validate the schema of cartItem": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is within acceptable range": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Validate the schema of cartItem": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response time is within acceptable range": true,
+					"Response body has the required fields": true,
+					"Validate the schema of cartItem": true
+				}
+			]
+		},
+		{
+			"id": "c574f223-8340-426a-ac5c-43c2e3a1d8b7",
+			"name": "remove item",
+			"url": "localhost:8080/api/carts/3b7500e3-0dde-4336-9225-40f79e767b2d/01fd8574-da95-4549-8c23-79212d909ca6",
+			"time": 16,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Response status code is 204": true,
+				"Response time is less than 200ms": true,
+				"Response body schema is validated against the expected schema for a successful deletion": true,
+				"Response body is null": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 204": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body schema is validated against the expected schema for a successful deletion": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body is null": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				16
+			],
+			"allTests": [
+				{
+					"Response status code is 204": true,
+					"Response time is less than 200ms": true,
+					"Response body schema is validated against the expected schema for a successful deletion": true,
+					"Response body is null": true
+				}
+			]
+		},
+		{
+			"id": "027a5ba6-e69a-43a1-83f0-0b4fc9fbfe06",
+			"name": "utility logout 2",
+			"url": "localhost:8080/api/auth/logout",
+			"time": 22,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				22
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "cf286685-905f-4c20-9aa2-f58d1e77d52d",
+			"name": "invalid signup",
+			"url": "localhost:8080/api/auth/signup",
+			"time": 4,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Response status code is 400": true,
+				"Response body contains the message 'Password must be at least'": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body contains the message 'Password must be at least'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				4
+			],
+			"allTests": [
+				{
+					"Response status code is 400": true,
+					"Response body contains the message 'Password must be at least'": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "634318d4-91b4-40f2-a558-a6eed3e3de70",
+			"name": "invalid signin",
 			"url": "localhost:8080/api/auth/signin",
-			"time": 96,
+			"time": 6,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Response status code is 401": true,
+				"Response Content-Type is text/plain": true,
+				"Response includes the error message 'An unexpected error occurred: Bad credentials'": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response Content-Type is text/plain": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response includes the error message 'An unexpected error occurred: Bad credentials'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				6
+			],
+			"allTests": [
+				{
+					"Response status code is 401": true,
+					"Response Content-Type is text/plain": true,
+					"Response includes the error message 'An unexpected error occurred: Bad credentials'": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "74878a6c-0d08-4bb6-859c-b450a2259356",
+			"name": "invalid email",
+			"url": "localhost:8080/api/auth/signup",
+			"time": 3,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Response status code is 400": true,
+				"Response Content-Type is application/json": true,
+				"Response body contains the message 'Email must have valid format'": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response Content-Type is application/json": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body contains the message 'Email must have valid format'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				3
+			],
+			"allTests": [
+				{
+					"Response status code is 400": true,
+					"Response Content-Type is application/json": true,
+					"Response body contains the message 'Email must have valid format'": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "fc4fc106-f3b4-46b3-8e4b-8b3d02b21a6e",
+			"name": "sixth signin",
+			"url": "localhost:8080/api/auth/signin",
+			"time": 80,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1369,7 +757,7 @@
 				}
 			},
 			"times": [
-				96
+				80
 			],
 			"allTests": [
 				{
@@ -1381,10 +769,553 @@
 			]
 		},
 		{
+			"id": "b3714dbe-9d94-4318-9d5b-079fcb8d4411",
+			"name": "invalid userId",
+			"url": "localhost:8080/api/users/803233snfjsnouiwfsj92",
+			"time": 10,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Response status code is 404": true,
+				"Response time is within an acceptable range": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 404": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is within an acceptable range": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				10
+			],
+			"allTests": [
+				{
+					"Response status code is 404": true,
+					"Response time is within an acceptable range": true
+				}
+			]
+		},
+		{
+			"id": "8c2ee2cd-b788-4845-9348-27787f11a2f3",
+			"name": "utility logout 3",
+			"url": "localhost:8080/api/auth/logout",
+			"time": 17,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				17
+			],
+			"allTests": [
+				{}
+			]
+		},
+		{
+			"id": "409c31dc-3349-4f24-ab97-2cba4b783ce6",
+			"name": "no auth",
+			"url": "localhost:8080/api/users",
+			"time": 2,
+			"responseCode": {
+				"code": 401,
+				"name": "Unauthorized"
+			},
+			"tests": {
+				"Response status code is 401": true,
+				"Response time is in an acceptable range": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 401": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is in an acceptable range": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				2
+			],
+			"allTests": [
+				{
+					"Response status code is 401": true,
+					"Response time is in an acceptable range": true
+				}
+			]
+		},
+		{
+			"id": "07952657-21d1-4f2d-aa2a-f9c15ce8ed2b",
+			"name": "seventh signin",
+			"url": "localhost:8080/api/auth/signin",
+			"time": 79,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response has the required fields": true,
+				"Token is a non-empty string": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Token is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				79
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response has the required fields": true,
+					"Token is a non-empty string": true
+				}
+			]
+		},
+		{
+			"id": "23c40d44-6717-4377-bb1e-7c576e1bbeed",
+			"name": "invalid itemId",
+			"url": "localhost:8080/api/items/87317jkah793",
+			"time": 11,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Response status code is 404": true,
+				"Response Content-Type is text/plain": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 404": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response Content-Type is text/plain": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Response status code is 404": true,
+					"Response Content-Type is text/plain": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "5a9e17c7-322c-4aa4-a826-e4a10e98ab13",
+			"name": "invalid category",
+			"url": "localhost:8080/api/items",
+			"time": 32,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Response status code is 204": true,
+				"Response time is less than 200ms": true,
+				"Response body is null": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 204": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body is null": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				32
+			],
+			"allTests": [
+				{
+					"Response status code is 204": true,
+					"Response time is less than 200ms": true,
+					"Response body is null": true
+				}
+			]
+		},
+		{
+			"id": "88fd1690-eb82-4c11-b52f-f1f1a96aa9b6",
+			"name": "invalid cartid",
+			"url": "localhost:8080/api/carts/quantity/tghb654r",
+			"time": 11,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Response status code is 404": true,
+				"Response time is less than 200ms": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 404": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				11
+			],
+			"allTests": [
+				{
+					"Response status code is 404": true,
+					"Response time is less than 200ms": true
+				}
+			]
+		},
+		{
+			"id": "52b2ee47-0bcd-4118-9b5c-73ae586b80b2",
+			"name": "invalid itemId update",
+			"url": "localhost:8080/api/carts/3b7500e3-0dde-4336-9225-40f79e767b2d",
+			"time": 19,
+			"responseCode": {
+				"code": 404,
+				"name": "Not Found"
+			},
+			"tests": {
+				"Response status code is 404": true,
+				"Response content type is text/plain": true,
+				"Response body contains 'Item not found'": true,
+				"Response time is within an acceptable range": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 404": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response content type is text/plain": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body contains 'Item not found'": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is within an acceptable range": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				19
+			],
+			"allTests": [
+				{
+					"Response status code is 404": true,
+					"Response content type is text/plain": true,
+					"Response body contains 'Item not found'": true,
+					"Response time is within an acceptable range": true
+				}
+			]
+		},
+		{
+			"id": "01590e86-e222-46c4-a602-36c24435ec1f",
+			"name": "invalid quantity",
+			"url": "localhost:8080/api/carts/quantity/3b7500e3-0dde-4336-9225-40f79e767b2d/01fd8574-da95-4549-8c23-79212d909ca6",
+			"time": 14,
+			"responseCode": {
+				"code": 400,
+				"name": "Bad Request"
+			},
+			"tests": {
+				"Response status code is 400": true,
+				"Response time is within an acceptable range": true,
+				"Verify that the response contains an error message": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 400": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is within an acceptable range": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Verify that the response contains an error message": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				14
+			],
+			"allTests": [
+				{
+					"Response status code is 400": true,
+					"Response time is within an acceptable range": true,
+					"Verify that the response contains an error message": true
+				}
+			]
+		},
+		{
+			"id": "4a2c5605-f9e9-481b-b875-cf97aa5c1d97",
+			"name": "clear cart",
+			"url": "localhost:8080/api/carts/3b7500e3-0dde-4336-9225-40f79e767b2d",
+			"time": 164,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Response status code is 204": true,
+				"Response time is within an acceptable range": true,
+				"Response body is null": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 204": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is within an acceptable range": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body is null": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				164
+			],
+			"allTests": [
+				{
+					"Response status code is 204": true,
+					"Response time is within an acceptable range": true,
+					"Response body is null": true
+				}
+			]
+		},
+		{
+			"id": "b03ecf20-f39e-476a-a96e-46a44dd4cea8",
+			"name": "logout",
+			"url": "localhost:8080/api/auth/logout",
+			"time": 23,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {
+				"Response status code is 204": true,
+				"Response time is within an acceptable range": true,
+				"Null value in the response": true,
+				"Response body is empty": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 204": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is within an acceptable range": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Null value in the response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response body is empty": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				23
+			],
+			"allTests": [
+				{
+					"Response status code is 204": true,
+					"Response time is within an acceptable range": true,
+					"Null value in the response": true,
+					"Response body is empty": true
+				}
+			]
+		},
+		{
+			"id": "2db0476b-941f-47e5-929a-142ddb9de80c",
+			"name": "fourth signin",
+			"url": "localhost:8080/api/auth/signin",
+			"time": 76,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Response has the required fields": true,
+				"Token is a non-empty string": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Token is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				76
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Response has the required fields": true,
+					"Token is a non-empty string": true
+				}
+			]
+		},
+		{
+			"id": "c7356282-80f2-4342-8f6a-5943aabc3903",
+			"name": "refresh",
+			"url": "localhost:8080/api/auth/refresh",
+			"time": 31,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response time is less than 200ms": true,
+				"Token field is present in the response": true,
+				"Token is a non-empty string": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is less than 200ms": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Token field is present in the response": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Token is a non-empty string": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				31
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response time is less than 200ms": true,
+					"Token field is present in the response": true,
+					"Token is a non-empty string": true
+				}
+			]
+		},
+		{
+			"id": "b49b5a41-27f9-4451-a16a-a23e4fc9076c",
+			"name": "test refresh",
+			"url": "localhost:8080/api/users",
+			"time": 12,
+			"responseCode": {
+				"code": 200,
+				"name": "OK"
+			},
+			"tests": {
+				"Response status code is 200": true,
+				"Response time is within acceptable range": true,
+				"Response has the required fields": true,
+				"Email is in a valid format": true
+			},
+			"testPassFailCounts": {
+				"Response status code is 200": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response time is within acceptable range": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Response has the required fields": {
+					"pass": 1,
+					"fail": 0
+				},
+				"Email is in a valid format": {
+					"pass": 1,
+					"fail": 0
+				}
+			},
+			"times": [
+				12
+			],
+			"allTests": [
+				{
+					"Response status code is 200": true,
+					"Response time is within acceptable range": true,
+					"Response has the required fields": true,
+					"Email is in a valid format": true
+				}
+			]
+		},
+		{
 			"id": "bff3588a-4a0f-407b-b0c5-fe7efb373752",
 			"name": "get all items utility",
 			"url": "localhost:8080/api/items",
-			"time": 26,
+			"time": 21,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1419,7 +1350,7 @@
 				}
 			},
 			"times": [
-				26
+				21
 			],
 			"allTests": [
 				{
@@ -1507,7 +1438,7 @@
 			"id": "b47de35a-c513-40a1-8783-d88dda77a49a",
 			"name": "search",
 			"url": "localhost:8080/api/items/search",
-			"time": 36,
+			"time": 25,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1537,7 +1468,7 @@
 				}
 			},
 			"times": [
-				36
+				25
 			],
 			"allTests": [
 				{
@@ -1552,7 +1483,7 @@
 			"id": "7e7705e8-bd83-44b2-8269-8d206a616cf8",
 			"name": "invalid decrease (insufficent stock)",
 			"url": "localhost:8080/api/items/stock/01fd8574-da95-4549-8c23-79212d909ca6",
-			"time": 21,
+			"time": 14,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -1577,7 +1508,7 @@
 				}
 			},
 			"times": [
-				21
+				14
 			],
 			"allTests": [
 				{
@@ -1591,7 +1522,7 @@
 			"id": "573a8946-fd33-46a6-b80a-2978f701b26f",
 			"name": "invalid decrease (negative quantity)",
 			"url": "localhost:8080/api/items/stock/01fd8574-da95-4549-8c23-79212d909ca6",
-			"time": 16,
+			"time": 13,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -1616,7 +1547,7 @@
 				}
 			},
 			"times": [
-				16
+				13
 			],
 			"allTests": [
 				{
@@ -1630,7 +1561,7 @@
 			"id": "9a618360-f225-4df9-abbb-da70c79d3469",
 			"name": "invalid decrease (invalid payload)",
 			"url": "localhost:8080/api/items/stock/01fd8574-da95-4549-8c23-79212d909ca6",
-			"time": 27,
+			"time": 11,
 			"responseCode": {
 				"code": 400,
 				"name": "Bad Request"
@@ -1655,7 +1586,7 @@
 				}
 			},
 			"times": [
-				27
+				11
 			],
 			"allTests": [
 				{
@@ -1669,7 +1600,7 @@
 			"id": "2e7136fe-4512-47a0-a8ec-f4fd438c92fe",
 			"name": "get user by email",
 			"url": "localhost:8080/api/users/email/real@edging.com",
-			"time": 66,
+			"time": 11,
 			"responseCode": {
 				"code": 200,
 				"name": "OK"
@@ -1694,7 +1625,7 @@
 				}
 			},
 			"times": [
-				66
+				11
 			],
 			"allTests": [
 				{
@@ -1708,7 +1639,7 @@
 			"id": "fb9ecc45-8791-4026-8a4e-57554c577027",
 			"name": "nonexisting email",
 			"url": "localhost:8080/api/users/email/sonico@real.smh",
-			"time": 42,
+			"time": 10,
 			"responseCode": {
 				"code": 404,
 				"name": "Not Found"
@@ -1728,7 +1659,7 @@
 				}
 			},
 			"times": [
-				42
+				10
 			],
 			"allTests": [
 				{
@@ -1736,10 +1667,28 @@
 					"Response time is less than 200ms": true
 				}
 			]
+		},
+		{
+			"id": "09e6fcb8-a7a0-40e3-9e77-d2b1478494fb",
+			"name": "cleanup",
+			"url": "localhost:8080/api/auth/logout",
+			"time": 27,
+			"responseCode": {
+				"code": 204,
+				"name": "No Content"
+			},
+			"tests": {},
+			"testPassFailCounts": {},
+			"times": [
+				27
+			],
+			"allTests": [
+				{}
+			]
 		}
 	],
 	"count": 1,
-	"totalTime": 1477,
+	"totalTime": 1527,
 	"collection": {
 		"requests": [
 			{
@@ -1748,6 +1697,10 @@
 			},
 			{
 				"id": "3f3c81a3-6553-4d3e-94a8-c8433722f5eb",
+				"method": "POST"
+			},
+			{
+				"id": "5ae4b145-a269-45da-b7ac-f3b5dfc7b3f9",
 				"method": "POST"
 			},
 			{
@@ -1795,6 +1748,10 @@
 				"method": "DELETE"
 			},
 			{
+				"id": "027a5ba6-e69a-43a1-83f0-0b4fc9fbfe06",
+				"method": "POST"
+			},
+			{
 				"id": "cf286685-905f-4c20-9aa2-f58d1e77d52d",
 				"method": "POST"
 			},
@@ -1807,12 +1764,24 @@
 				"method": "POST"
 			},
 			{
+				"id": "fc4fc106-f3b4-46b3-8e4b-8b3d02b21a6e",
+				"method": "POST"
+			},
+			{
 				"id": "b3714dbe-9d94-4318-9d5b-079fcb8d4411",
 				"method": "GET"
 			},
 			{
+				"id": "8c2ee2cd-b788-4845-9348-27787f11a2f3",
+				"method": "POST"
+			},
+			{
 				"id": "409c31dc-3349-4f24-ab97-2cba4b783ce6",
 				"method": "GET"
+			},
+			{
+				"id": "07952657-21d1-4f2d-aa2a-f9c15ce8ed2b",
+				"method": "POST"
 			},
 			{
 				"id": "23c40d44-6717-4377-bb1e-7c576e1bbeed",
@@ -1839,22 +1808,6 @@
 				"method": "DELETE"
 			},
 			{
-				"id": "5026df5e-b212-4159-9de0-dcbb161b8fe5",
-				"method": "GET"
-			},
-			{
-				"id": "a0ef1afd-29af-42e5-ab9d-c2dbaed51ecd",
-				"method": "POST"
-			},
-			{
-				"id": "f344ee1e-493b-40fe-9e98-42899aa05cc7",
-				"method": "GET"
-			},
-			{
-				"id": "d9eab9ee-d6d3-451d-9f69-f71ea98cf0fb",
-				"method": "POST"
-			},
-			{
 				"id": "b03ecf20-f39e-476a-a96e-46a44dd4cea8",
 				"method": "POST"
 			},
@@ -1869,10 +1822,6 @@
 			{
 				"id": "b49b5a41-27f9-4451-a16a-a23e4fc9076c",
 				"method": "GET"
-			},
-			{
-				"id": "b19f2226-7a30-4c9c-a2d0-15156a6b7099",
-				"method": "POST"
 			},
 			{
 				"id": "bff3588a-4a0f-407b-b0c5-fe7efb373752",
@@ -1909,6 +1858,10 @@
 			{
 				"id": "fb9ecc45-8791-4026-8a4e-57554c577027",
 				"method": "GET"
+			},
+			{
+				"id": "09e6fcb8-a7a0-40e3-9e77-d2b1478494fb",
+				"method": "POST"
 			}
 		]
 	}
