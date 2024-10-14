@@ -12,7 +12,7 @@ FROM eclipse-temurin:17
 
 WORKDIR /backendapp
 
-COPY --from=build /target/ByteBazaarBackend-0.0.1-SNAPSHOT.jar backendapp.jar
+COPY --from=build /backendapp/target/ByteBazaarBackend-0.0.1-SNAPSHOT.jar backendapp.jar
 
 EXPOSE 8080
 
